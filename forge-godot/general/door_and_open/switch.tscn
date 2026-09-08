@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://45dh57ttxsqk"]
+
+[ext_resource type="Texture2D" uid="uid://b5taf25l0afn1" path="res://general/door_and_open/door_and_switch.png" id="1_tpq7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
+size = Vector2(20, 9)
+
+[node name="Switch" type="Switch" unique_id=216130241]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1221397649]
+unique_name_in_owner = true
+texture = ExtResource("1_tpq7j")
+offset = Vector2(0, -16)
+vframes = 3
+frame = 2
+
+[node name="Interactive" type="Interactive" parent="." unique_id=1336449655]
+unique_name_in_owner = true
+process_mode = 3
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactive" unique_id=1473417502]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_wvhbo")

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bn2rpmna2457n"]
+
+[ext_resource type="Texture2D" uid="uid://b708dst74noa" path="res://sprites/input_icons.png" id="1_y6iv3"]
+
+[node name="InputHints" type="InputHints" unique_id=913201390]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1225117042]
+unique_name_in_owner = true
+position = Vector2(0, -1)
+texture = ExtResource("1_y6iv3")
+hframes = 16

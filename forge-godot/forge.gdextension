@@ -1,0 +1,25 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 =     "res://../forge_lib/target/debug/libforge_lib.so"
+linux.release.x86_64 =   "res://../forge_lib/target/release/libforge_lib.so"
+windows.debug.x86_64 =   "res://../forge_lib/target/x86_64-pc-windows-gnu/debug/forge_lib.dll"
+windows.release.x86_64 = "res://../forge_lib/target/x86_64-pc-windows-gnu/release/forge_lib.dll"
+macos.debug =            "res://../forge_lib/target/debug/libforge_lib.dylib"
+macos.release =          "res://../forge_lib/target/release/libforge_lib.dylib"
+macos.debug.arm64 =      "res://../forge_lib/target/debug/libforge_lib.dylib"
+macos.release.arm64 =    "res://../forge_lib/target/release/libforge_lib.dylib"
+
+
+[icons]
+Player = "res://sprites/icon/map_node.svg"
+LevelBounds = "res://general/icons/level_bounds.svg"
+LevelTransition = "res://general/icons/level_transition.svg"
+PlayerSpawn = "res://general/icons/player_spawn.svg"
+SavePoint = "res://general/icons/save_point.svg"
+Door = "res://general/icons/door.svg"
+MapNode = "res://general/icons/map_node.svg"
+Switch = "res://general/icons/switch.svg"

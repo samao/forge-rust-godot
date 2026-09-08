@@ -1,0 +1,251 @@
+[gd_scene format=3 uid="uid://eedmxm0nkckg"]
+
+[ext_resource type="PackedScene" uid="uid://hd0kldy2wt6r" path="res://general/map_node/map_node.tscn" id="1_n87rw"]
+
+[sub_resource type="FontVariation" id="FontVariation_wvhbo"]
+spacing_glyph = 6
+
+[node name="PauseMenu" type="PauseMenu" unique_id=1032504473]
+process_mode = 3
+layer = 3
+
+[node name="Control" type="Control" parent="." unique_id=1237514656]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1642215920]
+modulate = Color(0.18039216, 0.18039216, 0.18039216, 0.8784314)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=831800374]
+modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Control" unique_id=755142381]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -93.0
+offset_top = 9.0
+offset_right = -16.0
+offset_bottom = 24.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.016998405, 0.34765625, 0.21401978, 1)
+theme_override_fonts/font = SubResource("FontVariation_wvhbo")
+text = "PAUSED"
+horizontal_alignment = 2
+metadata/_edit_lock_ = true
+
+[node name="PauseScreen" type="Control" parent="Control" unique_id=746225139]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/PauseScreen" unique_id=206795177]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 27.0
+text = "Abilitites"
+
+[node name="Label2" type="Label" parent="Control/PauseScreen" unique_id=1223475144]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 12.0
+offset_right = 182.0
+offset_bottom = 27.0
+text = "Map"
+
+[node name="Map" type="Control" parent="Control/PauseScreen" unique_id=234661672]
+anchors_preset = 0
+offset_left = 119.0
+offset_top = 34.0
+offset_right = 469.0
+offset_bottom = 199.0
+
+[node name="Control" type="Control" parent="Control/PauseScreen/Map" unique_id=1582012238]
+layout_mode = 1
+anchors_preset = 0
+scale = Vector2(0.95, 0.95)
+
+[node name="MapNode" parent="Control/PauseScreen/Map/Control" unique_id=1616618951 instance=ExtResource("1_n87rw")]
+scene = "uid://bowrs0wcn2oy6"
+modulate = Color(1, 0.56999373, 0.3724661, 1)
+layout_mode = 0
+offset_top = 6.0
+offset_right = 160.0
+offset_bottom = 71.0
+
+[node name="MapNode2" parent="Control/PauseScreen/Map/Control" unique_id=1299997951 instance=ExtResource("1_n87rw")]
+scene = "uid://bod3sbpoj5mue"
+layout_mode = 0
+offset_left = 197.89471
+offset_top = 69.05263
+offset_right = 277.8947
+offset_bottom = 113.05263
+
+[node name="MapNode3" parent="Control/PauseScreen/Map/Control" unique_id=1840407546 instance=ExtResource("1_n87rw")]
+scene = "uid://b8iock12umhve"
+layout_mode = 0
+offset_left = 163.15791
+offset_top = 30.526314
+offset_right = 283.1579
+offset_bottom = 63.526314
+
+[node name="MapNode4" parent="Control/PauseScreen/Map/Control" unique_id=375146696 instance=ExtResource("1_n87rw")]
+scene = "uid://wqwk2yx7bdun"
+layout_mode = 0
+offset_left = 286.94733
+offset_top = 31.052635
+offset_right = 366.94733
+offset_bottom = 64.052635
+
+[node name="MapNode5" parent="Control/PauseScreen/Map/Control" unique_id=944066573 instance=ExtResource("1_n87rw")]
+modulate = Color(0.17135924, 0.37851942, 1, 1)
+layout_mode = 0
+offset_left = 195.10524
+offset_top = 132.10526
+offset_right = 248.10524
+offset_bottom = 155.10526
+
+[node name="MapNode7" parent="Control/PauseScreen/Map/Control" unique_id=958959076 instance=ExtResource("1_n87rw")]
+scene = "uid://cwjhs426yd7cn"
+modulate = Color(0.17135924, 0.37851942, 1, 1)
+layout_mode = 0
+offset_left = 298.0
+offset_top = 69.10525
+offset_right = 346.0
+offset_bottom = 158.10526
+
+[node name="MapNode6" parent="Control/PauseScreen/Map/Control" unique_id=2008879290 instance=ExtResource("1_n87rw")]
+scene = "uid://co0hdw8llcoq0"
+modulate = Color(0.17135924, 0.37851942, 1, 1)
+layout_mode = 0
+offset_left = 253.10529
+offset_top = 119.10527
+offset_right = 293.1053
+offset_bottom = 142.10527
+
+[node name="SystemButton" type="Button" parent="Control/PauseScreen" unique_id=1096038602]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -93.0
+offset_top = -33.0
+offset_right = -14.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "System"
+
+[node name="System" type="Control" parent="Control" unique_id=823800977]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/System" unique_id=904061677]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -86.0
+offset_right = 121.0
+offset_bottom = 72.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/System/VBoxContainer" unique_id=1343666498]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BackToMapButton" type="Button" parent="Control/System/VBoxContainer/HBoxContainer" unique_id=1768977034]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Back to Map"
+
+[node name="BackToTitleButton" type="Button" parent="Control/System/VBoxContainer/HBoxContainer" unique_id=246154227]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Back to title"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/System/VBoxContainer" unique_id=543119463]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/System/VBoxContainer/HBoxContainer2" unique_id=830253491]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Control/System/VBoxContainer/HBoxContainer2" unique_id=47281326]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/System/VBoxContainer" unique_id=1480911834]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/System/VBoxContainer/HBoxContainer3" unique_id=478186725]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Sound"
+
+[node name="SFXSlider" type="HSlider" parent="Control/System/VBoxContainer/HBoxContainer3" unique_id=169237416]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/System/VBoxContainer" unique_id=829298402]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/System/VBoxContainer/HBoxContainer4" unique_id=2102250437]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "UI"
+
+[node name="UiSlider" type="HSlider" parent="Control/System/VBoxContainer/HBoxContainer4" unique_id=1530401679]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 0.5

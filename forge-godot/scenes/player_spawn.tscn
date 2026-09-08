@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://lyslvee0784i"]
+
+[ext_resource type="Texture2D" uid="uid://dbp88peqb21sp" path="res://sprites/hero.png" id="1_evywo"]
+
+[node name="PlayerSpawn" type="PlayerSpawn" unique_id=2011755480]
+modulate = Color(0.33434498, 0.20170927, 1, 1)
+z_index = 100
+texture = ExtResource("1_evywo")
+offset = Vector2(0, -40)
+hframes = 16
+vframes = 4

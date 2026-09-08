@@ -1,0 +1,211 @@
+[gd_scene format=4 uid="uid://cu7ofetipfdnf"]
+
+[ext_resource type="TileSet" uid="uid://cihiojrj6k51" path="res://levels/tilesets/forgotten_forest.tres" id="1_6c4dy"]
+[ext_resource type="PackedScene" uid="uid://btcfvei5mu44d" path="res://levels/props/torch.tscn" id="2_u3qw7"]
+[ext_resource type="Texture2D" uid="uid://bkd8dxtqtrjnh" path="res://sprites/metroidvania_logo.png" id="3_u3qw7"]
+
+[sub_resource type="Animation" id="Animation_u3qw7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_i74o6"]
+resource_name = "loop"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.90000004),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="Animation" id="Animation_o7sog"]
+resource_name = "start"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.90000004),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i74o6"]
+_data = {
+&"RESET": SubResource("Animation_u3qw7"),
+&"loop": SubResource("Animation_i74o6"),
+&"start": SubResource("Animation_o7sog")
+}
+
+[node name="SceneTitle" type="ScreenTitle" unique_id=1266439091]
+
+[node name="Control" type="Control" parent="." unique_id=477332243]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1462949270]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tilemaps" type="Node" parent="Control" unique_id=619683446]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Control/Tilemaps" unique_id=892259283]
+tile_map_data = PackedByteArray("AAAAAAgAAAAJAA0AAAAAAAkAAAAJAA0AAAABAAgAAAAJAA0AAAABAAkAAAAJAA0AAAACAAgAAAAJAA0AAAACAAkAAAAJAA0AAAADAAgAAAAJAA0AAAADAAkAAAAJAA0AAAAEAAgAAAAJAA0AAAAEAAkAAAAJAA0AAAAFAAgAAAAJAA0AAAAFAAkAAAAJAA0AAAAGAAgAAAAJAA0AAAAGAAkAAAAJAA0AAAAHAAgAAAAJAA0AAAAHAAkAAAAJAA0AAAAIAAgAAAAJAA0AAAAIAAkAAAAJAA0AAAAJAAgAAAAJAA0AAAAJAAkAAAAJAA0AAAAKAAgAAAAJAA0AAAAKAAkAAAAJAA0AAAALAAgAAAAJAA0AAAALAAkAAAAJAA0AAAAMAAgAAAAJAA0AAAAMAAkAAAAJAA0AAAANAAgAAAAJAA0AAAANAAkAAAAJAA0AAAAOAAgAAAAJAA0AAAAOAAkAAAAJAA0AAAAAAAIAAAAJAA0AAAABAAIAAAAJAA0AAAACAAIAAAAHAAwAAAADAAIAAAAIAAwAAAAEAAIAAAAJAAwAAAAFAAIAAAAJAA0AAAAJAAIAAAAHAAwAAAAKAAIAAAAIAAwAAAALAAIAAAAJAAwAAAAMAAIAAAAJAA0AAAANAAIAAAAJAA0AAAAOAAIAAAAJAA0AAAAJAAEAAAAJAA0AAAAKAAEAAAAJAA0AAAAEAAEAAAAJAA0AAAAFAAEAAAAJAA0AAAAGAAEAAAAJAA0AAAAHAAEAAAAJAA0AAAAIAAEAAAAJAA0AAAACAAAAAAAJAA0AAAACAAEAAAAJAA0AAAADAAAAAAAJAA0AAAADAAEAAAAJAA0AAAAAAAAAAAAJAA0AAAAAAAEAAAAJAA0AAAABAAAAAAAJAA0AAAABAAEAAAAJAA0AAAALAAAAAAAJAA0AAAALAAEAAAAJAA0AAAAMAAAAAAAJAA0AAAAMAAEAAAAJAA0AAAANAAAAAAAJAA0AAAANAAEAAAAJAA0AAAAOAAAAAAAJAA0AAAAOAAEAAAAJAA0AAAAEAAAAAAAJAA0AAAAFAAAAAAAJAA0AAAAGAAAAAAAJAA0AAAAHAAAAAAAJAA0AAAAIAAAAAAAJAA0AAAAJAAAAAAAJAA0AAAAKAAAAAAAJAA0AAAAAAAoAAAAJAA0AAAABAAoAAAAJAA0AAAACAAoAAAAJAA0AAAADAAoAAAAJAA0AAAAEAAoAAAAJAA0AAAAFAAoAAAAJAA0AAAAGAAoAAAAJAA0AAAAHAAoAAAAJAA0AAAAIAAoAAAAJAA0AAAAJAAoAAAAJAA0AAAAKAAoAAAAJAA0AAAALAAoAAAAJAA0AAAAMAAoAAAAJAA0AAAANAAoAAAAJAA0AAAAOAAoAAAAJAA0AAAD/////AAAJAA0AAAD//wAAAAAJAA0AAAD//wEAAAAJAA0AAAD//wIAAAAJAA0AAAD//wMAAAAJAA0AAAD//wQAAAAJAA0AAAD//wUAAAAJAA0AAAD//wYAAAAJAA0AAAD//wcAAAAJAA0AAAD//wgAAAAJAA0AAAD//wkAAAAJAA0AAAD//woAAAAJAA0AAAAAAP//AAAJAA0AAAAAAAQAAAAJAA0AAAAAAAUAAAAJAA0AAAAAAAYAAAAJAA0AAAAAAAcAAAAJAA0AAAABAP//AAAJAA0AAAABAAMAAAAJAA0AAAABAAQAAAAJAA0AAAABAAUAAAAJAA0AAAABAAYAAAAJAA0AAAABAAcAAAAJAA0AAAACAP//AAAJAA0AAAACAAMAAAAJAA0AAAACAAQAAAAJAA0AAAACAAUAAAAJAA0AAAACAAYAAAAHAA4AAAACAAcAAAAJAA0AAAADAP//AAAJAA0AAAADAAMAAAAIAA0AAAADAAQAAAAIAA0AAAADAAUAAAAIAA0AAAADAAYAAAAIAA4AAAADAAcAAAAJAA0AAAAEAP//AAAJAA0AAAAEAAMAAAAJAA0AAAAEAAQAAAAJAA0AAAAEAAUAAAAJAA0AAAAEAAYAAAAJAA4AAAAEAAcAAAAJAA0AAAAFAP//AAAJAA0AAAAFAAMAAAAJAA0AAAAFAAQAAAAJAA0AAAAFAAUAAAAJAA0AAAAFAAYAAAAJAA0AAAAFAAcAAAAJAA0AAAAGAP//AAAJAA0AAAAGAAIAAAAJAA0AAAAGAAMAAAAJAA0AAAAGAAQAAAAJAA0AAAAGAAUAAAAJAA0AAAAGAAYAAAAJAA0AAAAGAAcAAAAJAA0AAAAHAP//AAAJAA0AAAAHAAIAAAAJAA0AAAAHAAMAAAAJAA0AAAAHAAQAAAAJAA0AAAAHAAUAAAAJAA0AAAAHAAYAAAAJAA0AAAAHAAcAAAAJAA0AAAAIAP//AAAJAA0AAAAIAAIAAAAJAA0AAAAIAAMAAAAJAA0AAAAIAAQAAAAJAA0AAAAIAAUAAAAJAA0AAAAIAAYAAAAJAA0AAAAIAAcAAAAJAA0AAAAJAP//AAAJAA0AAAAJAAMAAAAJAA0AAAAJAAQAAAAJAA0AAAAJAAUAAAAJAA0AAAAJAAYAAAAHAA4AAAAJAAcAAAAJAA0AAAAKAP//AAAJAA0AAAAKAAMAAAAIAA0AAAAKAAQAAAAIAA0AAAAKAAUAAAAIAA0AAAAKAAYAAAAIAA4AAAAKAAcAAAAJAA0AAAALAP//AAAJAA0AAAALAAMAAAAJAA0AAAALAAQAAAAJAA0AAAALAAUAAAAJAA0AAAALAAYAAAAJAA4AAAALAAcAAAAJAA0AAAAMAP//AAAJAA0AAAAMAAMAAAAJAA0AAAAMAAQAAAAJAA0AAAAMAAUAAAAJAA0AAAAMAAYAAAAJAA0AAAAMAAcAAAAJAA0AAAANAP//AAAJAA0AAAANAAMAAAAJAA0AAAANAAQAAAAJAA0AAAANAAUAAAAJAA0AAAANAAYAAAAJAA0AAAANAAcAAAAJAA0AAAAOAP//AAAJAA0AAAAOAAMAAAAJAA0AAAAOAAQAAAAJAA0AAAAOAAUAAAAJAA0AAAAOAAYAAAAJAA0AAAAOAAcAAAAJAA0AAAAPAP//AAAJAA0AAAAPAAAAAAAJAA0AAAAPAAEAAAAJAA0AAAAPAAIAAAAJAA0AAAAPAAMAAAAJAA0AAAAPAAQAAAAJAA0AAAAPAAUAAAAJAA0AAAAPAAYAAAAJAA0AAAAPAAcAAAAJAA0AAAAPAAgAAAAJAA0AAAAPAAkAAAAJAA0AAAAPAAoAAAAJAA0AAAAAAAMAAAAHAA0AAAA=")
+tile_set = ExtResource("1_6c4dy")
+collision_enabled = false
+metadata/_edit_lock_ = true
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="Control/Tilemaps" unique_id=1998789555]
+tile_map_data = PackedByteArray("AAAAAAgAAAABAAkAAAAAAAkAAAACAAoAAAABAAgAAAACAAkAAAABAAkAAAACAAoAAAACAAgAAAADAAkAAAACAAkAAAACAAoAAAADAAgAAAAEAAkAAAADAAkAAAACAAoAAAAEAAgAAAABAAkAAAAEAAkAAAACAAoAAAAFAAgAAAACAAkAAAAFAAkAAAACAAoAAAAGAAgAAAADAAkAAAAGAAkAAAACAAoAAAAHAAgAAAAEAAkAAAAHAAkAAAACAAoAAAAIAAgAAAABAAkAAAAIAAkAAAACAAoAAAAJAAgAAAACAAkAAAAJAAkAAAACAAoAAAAKAAgAAAADAAkAAAAKAAkAAAACAAoAAAALAAgAAAAEAAkAAAALAAkAAAACAAoAAAAMAAgAAAABAAkAAAAMAAkAAAACAAoAAAANAAgAAAACAAkAAAANAAkAAAACAAoAAAAOAAgAAAADAAkAAAAOAAkAAAACAAoAAAAAAAcAAAABAAgAAAABAAcAAAACAAgAAAACAAcAAAADAAgAAAADAAcAAAAEAAgAAAAEAAcAAAABAAgAAAAFAAcAAAACAAgAAAAGAAcAAAADAAgAAAAHAAcAAAAEAAgAAAAIAAcAAAABAAgAAAAJAAcAAAACAAgAAAAKAAcAAAADAAgAAAALAAcAAAAEAAgAAAAMAAcAAAABAAgAAAANAAcAAAACAAgAAAAOAAcAAAADAAgAAAAAAAAAAAACAAsAAAAAAAEAAAAAAAwAAAABAAAAAAADAAsAAAABAAEAAAABAAwAAAACAAAAAAACAAsAAAACAAEAAAACAAwAAAADAAAAAAAEAAsAAAADAAEAAAAEAAwAAAAEAAAAAAACAAwAAAAEAAEAAAAFAAwAAAAFAAAAAAADAAwAAAAGAAAAAAACAAwAAAAHAAAAAAADAAwAAAAIAAAAAAACAAwAAAAJAAAAAAADAAwAAAAJAAEAAAAAAAwAAAAKAAAAAAABAAsAAAAKAAEAAAABAAwAAAALAAAAAAACAAsAAAALAAEAAAADAAwAAAAMAAAAAAADAAsAAAAMAAEAAAAEAAwAAAANAAAAAAACAAsAAAANAAEAAAAEAAwAAAAOAAAAAAADAAsAAAAOAAEAAAAFAAwAAAAAAP//AAACAAoAAAABAP//AAADAAoAAAACAP//AAACAAoAAAADAP//AAACAAoAAAAEAP//AAACAAoAAAAFAP//AAACAAoAAAAGAP//AAACAAoAAAAHAP//AAACAAoAAAAIAP//AAACAAoAAAAJAP//AAACAAoAAAAKAP//AAACAAoAAAALAP//AAACAAoAAAAMAP//AAADAAoAAAANAP//AAACAAoAAAAOAP//AAADAAoAAAA=")
+tile_set = ExtResource("1_6c4dy")
+
+[node name="Torchs" type="Node" parent="Control" unique_id=448938680]
+
+[node name="Torch" parent="Control/Torchs" unique_id=1895622663 instance=ExtResource("2_u3qw7")]
+z_index = 1
+position = Vector2(80, 202)
+
+[node name="Torch2" parent="Control/Torchs" unique_id=1077002568 instance=ExtResource("2_u3qw7")]
+z_index = 1
+position = Vector2(365, 202)
+
+[node name="MainMenu" type="VBoxContainer" parent="." unique_id=1034231400]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = 4.0
+offset_right = 31.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Logo" type="Node2D" parent="MainMenu" unique_id=1048387758]
+
+[node name="Sprite2D" type="Sprite2D" parent="MainMenu/Logo" unique_id=619061726]
+position = Vector2(37, -50)
+texture = ExtResource("3_u3qw7")
+hframes = 8
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainMenu/Logo" unique_id=1322182886]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_i74o6")
+autoplay = &"start"
+
+[node name="NewGameButton" type="Button" parent="MainMenu" unique_id=290207422]
+unique_name_in_owner = true
+layout_mode = 2
+text = "new game"
+
+[node name="LoadGameButton" type="Button" parent="MainMenu" unique_id=1095867784]
+unique_name_in_owner = true
+layout_mode = 2
+text = "load game"
+
+[node name="Select" type="VBoxContainer" parent="." unique_id=1935804097]
+unique_name_in_owner = true
+offset_left = 166.0
+offset_top = 70.0
+offset_right = 292.0
+offset_bottom = 186.0
+
+[node name="NewGame" type="VBoxContainer" parent="Select" unique_id=1147129215]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Select/NewGame" unique_id=756000063]
+modulate = Color(1, 0, 0.5114827, 1)
+layout_mode = 2
+text = "start a new game"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="Select/NewGame" unique_id=1265195151]
+layout_mode = 2
+
+[node name="Begin_Slot1" type="Button" parent="Select/NewGame" unique_id=719817672]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Begin slot 1"
+
+[node name="Begin_Slot2" type="Button" parent="Select/NewGame" unique_id=2106384188]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Begin slot 2"
+
+[node name="Begin_Slot3" type="Button" parent="Select/NewGame" unique_id=1481876682]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Begin slot 3"
+
+[node name="LoadGame" type="VBoxContainer" parent="Select" unique_id=34813031]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Select/LoadGame" unique_id=1716386701]
+modulate = Color(1, 0, 0.5114827, 1)
+layout_mode = 2
+text = "load a saved game"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="Select/LoadGame" unique_id=1792905037]
+layout_mode = 2
+
+[node name="Load_Slot1" type="Button" parent="Select/LoadGame" unique_id=1519501956]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load slot 1"
+
+[node name="Load_Slot2" type="Button" parent="Select/LoadGame" unique_id=1800097571]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load slot 2"
+
+[node name="Load_Slot3" type="Button" parent="Select/LoadGame" unique_id=1103466775]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load slot 3"
+
+[node name="BackButton" type="Button" parent="Select" unique_id=546192608]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45364526, 0.8745098, 0.44046924, 1)
+text = "Back
+"

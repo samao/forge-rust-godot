@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://solc2yasfju0"]
+
+[sub_resource type="Gradient" id="Gradient_cxyc4"]
+offsets = PackedFloat32Array(0, 0.3930131, 0.80349344, 0.9694323)
+colors = PackedColorArray(1, 0.8342896, 0.23162961, 1, 1, 1, 0, 0.78300005, 1, 1, 0, 0.22900002, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wvhbo"]
+gradient = SubResource("Gradient_cxyc4")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="FlickerLight" type="FlickerLight" unique_id=960628872]
+flicker_intensity = 0.2
+flicker_frequency = 0.1
+scale = Vector2(1, 0.8385417)
+energy = 1.25
+texture = SubResource("GradientTexture2D_wvhbo")
+
+[node name="Timer" type="Timer" parent="." unique_id=288591740]
+autostart = true

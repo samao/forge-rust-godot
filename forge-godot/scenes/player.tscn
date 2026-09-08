@@ -1,0 +1,220 @@
+[gd_scene format=3 uid="uid://dsb0ws03rbp33"]
+
+[ext_resource type="Texture2D" uid="uid://dbp88peqb21sp" path="res://sprites/hero.png" id="1_3vyb7"]
+[ext_resource type="PackedScene" uid="uid://bn2rpmna2457n" path="res://general/input_hints/input_hints.tscn" id="2_g2els"]
+
+[sub_resource type="Gradient" id="Gradient_3vyb7"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.20689656, 0.55172414, 1)
+colors = PackedColorArray(1, 1, 0, 0.76500005, 1, 1, 0, 0.50600004, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
+gradient = SubResource("Gradient_3vyb7")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hddm4"]
+radius = 8.0
+height = 40.0
+
+[sub_resource type="Animation" id="Animation_3vyb7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "attack_0"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [31, 32, 33, 34, 35, 36]
+}
+
+[sub_resource type="Animation" id="Animation_fjrip"]
+resource_name = "attack_1"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [31, 32, 33, 34, 35, 36]
+}
+
+[sub_resource type="Animation" id="Animation_g2els"]
+resource_name = "crouch"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23]
+}
+
+[sub_resource type="Animation" id="Animation_smehm"]
+resource_name = "fall"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [26, 27, 28]
+}
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "jump"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [24, 25, 26]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "run"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
+_data = {
+&"RESET": SubResource("Animation_3vyb7"),
+&"attack_0": SubResource("Animation_tuyoq"),
+&"attack_1": SubResource("Animation_fjrip"),
+&"crouch": SubResource("Animation_g2els"),
+&"fall": SubResource("Animation_smehm"),
+&"idle": SubResource("Animation_qhqgy"),
+&"jump": SubResource("Animation_dqkch"),
+&"run": SubResource("Animation_qlg0r")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifow5"]
+size = Vector2(16, 3)
+
+[node name="Player" type="Player" unique_id=392892552 groups=["Player"]]
+z_index = 1
+collision_layer = 4
+collision_mask = 3
+floor_snap_length = 16.0
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1026182224]
+show_behind_parent = true
+position = Vector2(0, -29)
+enabled = false
+energy = 0.5
+texture = SubResource("GradientTexture2D_g2els")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=436635521]
+process_mode = 3
+position = Vector2(0, -37)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=124738828]
+position = Vector2(0, -40)
+texture = ExtResource("1_3vyb7")
+hframes = 16
+vframes = 4
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1301589506]
+position = Vector2(0, -20)
+shape = SubResource("CapsuleShape2D_hddm4")
+debug_color = Color(0.98688835, 0, 0.32376727, 0.41960785)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1532367667]
+libraries/ = SubResource("AnimationLibrary_tuyoq")
+autoplay = &"idle"
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=450827148]
+position = Vector2(0, -4)
+enabled = false
+shape = SubResource("RectangleShape2D_ifow5")
+target_position = Vector2(0, 6)
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="InputHints" parent="." unique_id=913201390 instance=ExtResource("2_g2els")]
+position = Vector2(0, -67)

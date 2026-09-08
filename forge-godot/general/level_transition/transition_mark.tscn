@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bpo1n0u8swa57"]
+
+[sub_resource type="Gradient" id="Gradient_m71lx"]
+offsets = PackedFloat32Array(0.56764704, 0.64117646, 0.7235294)
+colors = PackedColorArray(0.5019608, 0.5019608, 0.5019608, 0, 0.8039216, 0.6745098, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wvhbo"]
+gradient = SubResource("Gradient_m71lx")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="TransitionMark" type="TransitionMark2D" unique_id=102379344 groups=["Transition_Marker"]]
+target_area_name = "transition position"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=580034780]
+texture = SubResource("GradientTexture2D_wvhbo")
+
+[node name="Label" type="Label" parent="." unique_id=17283956]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -41.0
+offset_right = 49.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "transition position"
+horizontal_alignment = 1

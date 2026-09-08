@@ -1,0 +1,14 @@
+*.translation          # 从CSV生成的二进制翻译文件[reference:4][reference:5]
+.godot/
+target/               # Rust 编译输出目录[reference:6]
+Cargo.lock             # 对于库项目建议忽略，对于应用项目可保留[reference:7]
+
+.DS_Store              # macOS 系统文件
+Thumbs.db              # Windows 系统文件
+*.bak                  # 备份文件
+
+.vscode/               # VS Code 配置
+.idea/                 # IntelliJ IDEA 配置
+
+export/               # 导出的游戏包[reference:8]
+build/                # 构建临时文件
