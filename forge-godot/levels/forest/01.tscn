@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://bdywhw5cct6d8" path="res://materials/fog_fade_material.tres" id="6_j3mwe"]
 [ext_resource type="Texture2D" uid="uid://cgchua14e28bs" path="res://levels/tilesets/sprites/light_stream.jpg" id="6_n6qnx"]
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="8_j3mwe"]
+[ext_resource type="AudioStream" uid="uid://bfw1oiiam3o32" path="res://music/forest_01.ogg" id="9_afb11"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_518qc"]
 texture = ExtResource("1_xby24")
@@ -988,3 +989,7 @@ process_material = SubResource("ParticleProcessMaterial_ifow5")
 
 [node name="PlayerSpawn" parent="." unique_id=2011755480 instance=ExtResource("8_j3mwe")]
 position = Vector2(1670, 67)
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=769279318]
+stream = ExtResource("9_afb11")
+effect_type = "LARGE"

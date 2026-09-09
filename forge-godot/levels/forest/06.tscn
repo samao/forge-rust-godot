@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bpo1n0u8swa57" path="res://general/level_transition/transition_mark.tscn" id="3_pehcq"]
 [ext_resource type="PackedScene" uid="uid://wxmjd83k6ur2" path="res://general/level_transition/level_transition.tscn" id="4_h6pe6"]
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="5_h6pe6"]
+[ext_resource type="AudioStream" uid="uid://dg3ow1sp3jqga" path="res://music/dungeon_01.ogg" id="6_hevm4"]
 
 [node name="06" type="Level" unique_id=1135061233]
 
@@ -58,3 +59,7 @@ position = Vector2(366, 202)
 
 [node name="PlayerSpawn" parent="." unique_id=2011755480 instance=ExtResource("5_h6pe6")]
 position = Vector2(208, 234)
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=1106987811]
+stream = ExtResource("6_hevm4")
+effect_type = "SMALL"

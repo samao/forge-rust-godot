@@ -40,14 +40,14 @@ impl PlayerSpawn {
             _ => self.player_scn.instantiate_as::<Player>(),
         };
 
-        if has_player {
-            return;
-        }
-
-        let pos = self.base().get_global_position();
-        player.set_global_position(pos);
-
         if let Some(mut root) = self.base().get_tree().get_root() {
+            let pos = self.base().get_global_position();
+            player.set_global_position(pos);
+            if has_player {
+                let top_index = root.get_child_count() - 1;
+                root.move_child(&player, top_index);
+                return;
+            }
             root.add_child(&player);
         }
     }

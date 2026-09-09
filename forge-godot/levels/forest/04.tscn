@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bpo1n0u8swa57" path="res://general/level_transition/transition_mark.tscn" id="3_px8ew"]
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="4_r5784"]
 [ext_resource type="PackedScene" uid="uid://btcfvei5mu44d" path="res://levels/props/torch.tscn" id="5_oww8m"]
+[ext_resource type="AudioStream" uid="uid://dg3ow1sp3jqga" path="res://music/dungeon_01.ogg" id="6_xycvq"]
 
 [node name="04" type="Level" unique_id=428616130]
 
@@ -85,3 +86,7 @@ position = Vector2(900, 166)
 color = Color(0.1953125, 0.015874067, 0.11622482, 1)
 energy = 0.49
 blend_mode = 2
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=1557908408]
+stream = ExtResource("6_xycvq")
+effect_type = "MEDUIM"

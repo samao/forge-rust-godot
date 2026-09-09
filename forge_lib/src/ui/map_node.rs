@@ -170,7 +170,11 @@ impl MapNode {
                         self.bound_pos.y = y;
                         self.set_size(width, height);
 
-                        let nodes_in_map = scene_instance.find_children("LevelTransition*");
+                        let nodes_in_map = scene_instance
+                            .find_children_ex("LevelTransition*")
+                            .type_("LevelTransition")
+                            // .recursive(true)
+                            .done();
                         let mut blocks_to_add = Vec::new();
                         for node in nodes_in_map.iter_shared() {
                             if let Ok(transition) = node.try_cast::<LevelTransition>() {

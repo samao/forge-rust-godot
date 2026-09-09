@@ -3,6 +3,7 @@
 [ext_resource type="TileSet" uid="uid://cihiojrj6k51" path="res://levels/tilesets/forgotten_forest.tres" id="1_6c4dy"]
 [ext_resource type="PackedScene" uid="uid://btcfvei5mu44d" path="res://levels/props/torch.tscn" id="2_u3qw7"]
 [ext_resource type="Texture2D" uid="uid://bkd8dxtqtrjnh" path="res://sprites/metroidvania_logo.png" id="3_u3qw7"]
+[ext_resource type="AudioStream" uid="uid://dcr5qo60v5370" path="res://music/title_01.ogg" id="4_o7sog"]
 
 [sub_resource type="Animation" id="Animation_u3qw7"]
 length = 0.001
@@ -127,12 +128,12 @@ unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_i74o6")
 autoplay = &"start"
 
-[node name="NewGameButton" type="Button" parent="MainMenu" unique_id=290207422]
+[node name="NewGameButton" type="AudioButton" parent="MainMenu" unique_id=1470860498]
 unique_name_in_owner = true
 layout_mode = 2
 text = "new game"
 
-[node name="LoadGameButton" type="Button" parent="MainMenu" unique_id=1095867784]
+[node name="LoadGameButton" type="AudioButton" parent="MainMenu" unique_id=204512853]
 unique_name_in_owner = true
 layout_mode = 2
 text = "load game"
@@ -158,17 +159,17 @@ horizontal_alignment = 1
 [node name="Control" type="Control" parent="Select/NewGame" unique_id=1265195151]
 layout_mode = 2
 
-[node name="Begin_Slot1" type="Button" parent="Select/NewGame" unique_id=719817672]
+[node name="Begin_Slot1" type="AudioButton" parent="Select/NewGame" unique_id=995388907]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Begin slot 1"
 
-[node name="Begin_Slot2" type="Button" parent="Select/NewGame" unique_id=2106384188]
+[node name="Begin_Slot2" type="AudioButton" parent="Select/NewGame" unique_id=2046519844]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Begin slot 2"
 
-[node name="Begin_Slot3" type="Button" parent="Select/NewGame" unique_id=1481876682]
+[node name="Begin_Slot3" type="AudioButton" parent="Select/NewGame" unique_id=268971434]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Begin slot 3"
@@ -188,24 +189,28 @@ horizontal_alignment = 1
 [node name="Control" type="Control" parent="Select/LoadGame" unique_id=1792905037]
 layout_mode = 2
 
-[node name="Load_Slot1" type="Button" parent="Select/LoadGame" unique_id=1519501956]
+[node name="Load_Slot1" type="AudioButton" parent="Select/LoadGame" unique_id=1081654121]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Load slot 1"
 
-[node name="Load_Slot2" type="Button" parent="Select/LoadGame" unique_id=1800097571]
+[node name="Load_Slot2" type="AudioButton" parent="Select/LoadGame" unique_id=265372178]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Load slot 2"
 
-[node name="Load_Slot3" type="Button" parent="Select/LoadGame" unique_id=1103466775]
+[node name="Load_Slot3" type="AudioButton" parent="Select/LoadGame" unique_id=284854905]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Load slot 3"
 
-[node name="BackButton" type="Button" parent="Select" unique_id=546192608]
+[node name="BackButton" type="AudioButton" parent="Select" unique_id=1600876935]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45364526, 0.8745098, 0.44046924, 1)
 text = "Back
 "
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=328286433]
+stream = ExtResource("4_o7sog")
+effect_type = "SMALL"

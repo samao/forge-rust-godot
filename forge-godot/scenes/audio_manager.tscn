@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cykd55enqg0pn"]
+
+[ext_resource type="AudioStream" uid="uid://m0w1i35uj73c" path="res://audio/ui_bloop_audio.wav" id="1_aoitu"]
+[ext_resource type="AudioStream" uid="uid://b3dvdvmggug1f" path="res://audio/ui_error_audio.wav" id="2_njtn3"]
+[ext_resource type="AudioStream" uid="uid://cqhp32eouueoq" path="res://audio/ui_select_audio.wav" id="3_kq7b2"]
+[ext_resource type="AudioStream" uid="uid://b2yqqqo3bs3vb" path="res://audio/ui_success_audio.wav" id="4_02gw7"]
+[ext_resource type="AudioStream" uid="uid://birpgnfx8n7gx" path="res://audio/ui_woosh.wav" id="5_ujhup"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_aoitu"]
+polyphony = 8
+
+[node name="AudioManager" type="AudioManager" unique_id=1914543772]
+ui_bloop = ExtResource("1_aoitu")
+ui_error = ExtResource("2_njtn3")
+ui_select = ExtResource("3_kq7b2")
+ui_success = ExtResource("4_02gw7")
+ui_woosh = ExtResource("5_ujhup")
+process_mode = 3
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=670132610]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="Music1" type="AudioStreamPlayer" parent="." unique_id=887686522]
+unique_name_in_owner = true
+bus = &"Music"
+
+[node name="Ui" type="AudioStreamPlayer" parent="." unique_id=285292493]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamPolyphonic_aoitu")
+bus = &"Ui"

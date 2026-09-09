@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://br2e3ppb8f6d6" path="res://levels/props/plant.tscn" id="5_wrl6h"]
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="7_4tx1h"]
 [ext_resource type="Material" uid="uid://bdywhw5cct6d8" path="res://materials/fog_fade_material.tres" id="7_26av7"]
+[ext_resource type="AudioStream" uid="uid://bfw1oiiam3o32" path="res://music/forest_01.ogg" id="8_4tx1h"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_26av7"]
 blend_mode = 1
@@ -222,3 +223,7 @@ position = Vector2(755, 198)
 color = Color(0.30078125, 0.30078125, 0.30078125, 1)
 energy = 0.27
 blend_mode = 2
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=1836277266]
+stream = ExtResource("8_4tx1h")
+effect_type = "MEDUIM"

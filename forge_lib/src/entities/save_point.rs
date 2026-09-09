@@ -4,6 +4,7 @@ use godot::prelude::*;
 use godot::signal::ConnectHandle;
 use godot::tools::try_get_autoload_by_name;
 
+use crate::audio_manager::UIAudio;
 use crate::entities::interactive::Interactive;
 use crate::managers::save::SaveManager;
 use crate::message::Message;
@@ -40,7 +41,7 @@ impl INode2D for SavePoint {
 #[godot_api]
 impl SavePoint {
     fn on_active(&mut self) {
-        godot_print!("active");
+        // godot_print!("active");
         let this = self.to_gd().clone();
         self.message_handle = Some(
             Message::singleton()
@@ -55,7 +56,7 @@ impl SavePoint {
     }
 
     fn on_deactive(&mut self) {
-        godot_print!("deactive");
+        // godot_print!("deactive");
         if let Some(handle) = self.message_handle.take() {
             handle.disconnect();
         }
@@ -68,6 +69,10 @@ impl SavePoint {
     fn on_interactive(&mut self) {
         self.animation.play_ex().name("saved").done();
         if let Ok(mut save_handle) = try_get_autoload_by_name::<SaveManager>("SaveHelper") {
+            Message::singleton()
+                .signals()
+                .play_ui_audio()
+                .emit(UIAudio::Success);
             save_handle.call_deferred("save_game", &[]);
         }
     }

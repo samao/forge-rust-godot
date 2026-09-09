@@ -88,7 +88,7 @@ impl SceneManager {
         {
             if let Some(menu) = self.pause_menu.take() {
                 if menu.is_inside_tree() {
-                    godot_print!("dismiss");
+                    // godot_print!("dismiss");
                     if let Some(mut parent) = menu.get_parent() {
                         // menu.get_parent().unwrap().remove_child(&menu);
                         parent.call_deferred("remove_child", &[menu.to_variant()]);

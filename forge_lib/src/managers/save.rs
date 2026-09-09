@@ -1,7 +1,7 @@
 use godot::{
     classes::{
-        Engine, FileAccess, InputEvent, InputEventKey, Json, file_access::ModeFlags,
-        object::ConnectFlags,
+        AudioServer, ConfigFile, Engine, FileAccess, InputEvent, InputEventKey, Json,
+        file_access::ModeFlags, object::ConnectFlags,
     },
     global::Key,
     obj::WithBaseField,
@@ -51,11 +51,41 @@ impl INode2D for SaveManager {
 }
 
 const DEFAULT_SCENE: &str = "uid://bowrs0wcn2oy6";
+const SETTING_FILE_PATH: &str = "user://setting.cfg";
 
 #[godot_api]
 impl SaveManager {
     fn get_save_path(&self) -> String {
         format!("user://save_{}.sav", self.current_slot)
+    }
+
+    pub fn save_cfg(&mut self) {
+        let music = AudioServer::singleton().get_bus_volume_linear(2);
+        let sfx = AudioServer::singleton().get_bus_volume_linear(3);
+        let ui = AudioServer::singleton().get_bus_volume_linear(4);
+
+        let mut setting_cfg = ConfigFile::new_gd();
+        setting_cfg.set_value("setting", "music", &music.to_variant());
+        setting_cfg.set_value("setting", "sfx", &sfx.to_variant());
+        setting_cfg.set_value("setting", "ui", &ui.to_variant());
+
+        let err = setting_cfg.save(SETTING_FILE_PATH);
+        if err == godot::global::Error::OK {
+            return;
+        }
+        godot_print!("{:?}", err.into_result());
+    }
+
+    pub fn get_volume(&self) -> (f64, f64, f64) {
+        let mut setting_cfg = ConfigFile::new_gd();
+        let result = setting_cfg.load(SETTING_FILE_PATH);
+        if result == godot::global::Error::OK {
+            let music = f64::from_variant(&setting_cfg.get_value("setting", "music"));
+            let sfx = f64::from_variant(&setting_cfg.get_value("setting", "sfx"));
+            let ui = f64::from_variant(&setting_cfg.get_value("setting", "ui"));
+            return (music, sfx, ui);
+        }
+        (0.5, 0.5, 0.5)
     }
 
     pub fn has_saved_point(&self) -> bool {
@@ -102,7 +132,7 @@ impl SaveManager {
             "ground_slam" => false,
             "morph_roll" => false,
             "discovered_areas" => &self.discovered_areas,
-            "persistent_data" => &self.persistent_data
+            "persistent_data" => &self.persistent_data,
         );
 
         if let Some(mut file) = FileAccess::open(self.get_save_path().as_str(), ModeFlags::WRITE) {
@@ -143,7 +173,7 @@ impl SaveManager {
                             "ground_slam" => player.ground_slam,
                             "morph_roll" => player.morph_roll,
                             "discovered_areas" => &self.discovered_areas.to_variant(),
-                            "persistent_data" => &self.persistent_data.to_variant()
+                            "persistent_data" => &self.persistent_data.to_variant(),
                         );
 
                         file.store_line(&Json::stringify(&self.save_data.to_variant()));

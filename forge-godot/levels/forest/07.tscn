@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://5aqkp5mrfi3y" path="res://general/door_and_open/door.tscn" id="5_tqk0c"]
 [ext_resource type="PackedScene" uid="uid://45dh57ttxsqk" path="res://general/door_and_open/switch.tscn" id="6_h7elp"]
 [ext_resource type="PackedScene" uid="uid://btcfvei5mu44d" path="res://levels/props/torch.tscn" id="7_h7elp"]
+[ext_resource type="AudioStream" uid="uid://dg3ow1sp3jqga" path="res://music/dungeon_01.ogg" id="8_80c4i"]
 
 [node name="07" type="Level" unique_id=91562376]
 
@@ -63,3 +64,7 @@ position = Vector2(118, 648)
 
 [node name="Torch" parent="." unique_id=1895622663 instance=ExtResource("7_h7elp")]
 position = Vector2(452, 678)
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=334171528]
+stream = ExtResource("8_80c4i")
+effect_type = "LARGE"

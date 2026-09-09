@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="5_j7t1w"]
 [ext_resource type="PackedScene" uid="uid://btcfvei5mu44d" path="res://levels/props/torch.tscn" id="5_w000q"]
 [ext_resource type="PackedScene" uid="uid://d3nndvpe73n81" path="res://general/save_point/save_point.tscn" id="6_j7t1w"]
+[ext_resource type="AudioStream" uid="uid://dg3ow1sp3jqga" path="res://music/dungeon_01.ogg" id="7_g5nvc"]
 
 [node name="02" type="Level" unique_id=836604153]
 theme = "Dark"
@@ -75,3 +76,7 @@ position = Vector2(295, -99)
 [node name="SavePoint" parent="." unique_id=2007735295 instance=ExtResource("6_j7t1w")]
 z_index = 1
 position = Vector2(733, 100)
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=1993386199]
+stream = ExtResource("7_g5nvc")
+effect_type = "SMALL"

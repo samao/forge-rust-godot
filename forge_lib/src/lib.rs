@@ -143,6 +143,7 @@ pub mod enemy;
 pub mod player;
 pub mod states;
 
+pub mod audio_manager;
 pub mod entities;
 pub mod level;
 pub mod level_bounds;

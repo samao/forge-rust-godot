@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bpo1n0u8swa57" path="res://general/level_transition/transition_mark.tscn" id="3_clrib"]
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="5_bdkh0"]
 [ext_resource type="PackedScene" uid="uid://btcfvei5mu44d" path="res://levels/props/torch.tscn" id="5_clrib"]
+[ext_resource type="AudioStream" uid="uid://bfw1oiiam3o32" path="res://music/forest_01.ogg" id="6_bdkh0"]
 
 [node name="05" type="Level" unique_id=2043156213]
 
@@ -49,3 +50,7 @@ position = Vector2(576, 200)
 
 [node name="PlayerSpawn" parent="." unique_id=2011755480 instance=ExtResource("5_bdkh0")]
 position = Vector2(233, 232)
+
+[node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=1677168008]
+stream = ExtResource("6_bdkh0")
+effect_type = "SMALL"
