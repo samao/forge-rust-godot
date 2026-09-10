@@ -1,0 +1,10 @@
+[gd_resource type="HitParticleSetting" format=3 uid="uid://cpi7sdopbcndq"]
+
+[ext_resource type="Texture2D" uid="uid://dj8s5hx42ysra" path="res://general/sprites/props_destructible.png" id="1_pk21q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pk21q"]
+atlas = ExtResource("1_pk21q")
+region = Rect2(120, 12, 4, 4)
+
+[resource]
+texture = SubResource("AtlasTexture_pk21q")

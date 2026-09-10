@@ -149,5 +149,6 @@ pub mod level_bounds;
 pub mod level_transition;
 pub mod managers;
 pub mod message;
+pub mod resource;
 pub mod transition_mark;
 pub mod ui;

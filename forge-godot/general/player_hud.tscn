@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dav3iibraltjv" path="res://sprites/health_bar_frame.png" id="1_20266"]
 
+[sub_resource type="HitParticleSetting" id="HitParticleSetting_1i8sr"]
+color = Color(1, 0.9624321, 0.2545712, 1)
+
 [sub_resource type="Gradient" id="Gradient_1i8sr"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
@@ -16,6 +19,7 @@ colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.7804127, 0.37113446, 0.27726
 gradient = SubResource("Gradient_5axos")
 
 [node name="PlayerHud" type="PlayerHud" unique_id=2020831820]
+particle_setting = SubResource("HitParticleSetting_1i8sr")
 process_mode = 3
 layer = 2
 

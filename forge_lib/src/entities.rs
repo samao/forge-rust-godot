@@ -1,6 +1,7 @@
 pub mod audio_tirgger;
 pub mod door;
 pub mod dust_effect;
+pub mod hit_particle;
 pub mod input_hints;
 pub mod interactive;
 pub mod light;

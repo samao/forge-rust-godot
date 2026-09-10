@@ -1,6 +1,7 @@
 use godot::{classes::AudioStream, prelude::*};
 
 use crate::managers::visual_effect::VisualEffectType;
+use crate::resource::particles::HitParticleSetting;
 use crate::{entities::audio_tirgger::AudioEffectType, managers::audio_manager::UIAudio};
 
 #[derive(GodotClass)]
@@ -29,6 +30,9 @@ impl Message {
     pub fn play_ui_audio(audio_type: UIAudio);
     #[signal]
     pub fn play_effect(v_type: VisualEffectType, pos: Vector2);
+
+    #[signal]
+    pub fn play_particles(pos: Vector2, direction: Vector2, cfg: Gd<HitParticleSetting>);
 
     #[signal]
     pub fn camera_shake(strength: f64);

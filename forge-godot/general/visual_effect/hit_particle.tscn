@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://6aqi4g8mrdog"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pyjg6"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 3.0
+initial_velocity_min = 50.0
+initial_velocity_max = 80.0
+scale_min = 0.9
+scale_max = 1.1999999
+
+[node name="HitParticle" type="HitParticle" unique_id=326214326]
+z_index = 2
+emitting = false
+one_shot = true
+speed_scale = 1.42
+explosiveness = 0.9
+randomness = 0.24
+process_material = SubResource("ParticleProcessMaterial_pyjg6")
