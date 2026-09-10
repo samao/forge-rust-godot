@@ -4,7 +4,7 @@ use godot::obj::WithBaseField;
 use godot::prelude::*;
 
 use crate::level_transition::Side;
-use crate::scene_manager::SceneManager;
+use crate::managers::scene_manager::SceneManager;
 
 #[derive(GodotClass)]
 #[class(init, tool, base = Marker2D)]

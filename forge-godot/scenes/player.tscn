@@ -186,7 +186,7 @@ energy = 0.5
 texture = SubResource("GradientTexture2D_g2els")
 metadata/_edit_lock_ = true
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=436635521]
+[node name="Camera2D" type="PlayerCamera" parent="." unique_id=1910265905]
 process_mode = 3
 position = Vector2(0, -37)
 metadata/_edit_lock_ = true

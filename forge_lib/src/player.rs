@@ -2,15 +2,15 @@ use std::collections::VecDeque;
 
 use godot::classes::{
     AnimationPlayer, CharacterBody2D, Engine, ICharacterBody2D, Input, InputEvent, InputEventKey,
-    Light2D, ShapeCast2D, Sprite2D,
+    Light2D, Os, ShapeCast2D, Sprite2D,
 };
 use godot::global::{Key, clampf};
 use godot::obj::{Singleton, WithBaseField};
 use godot::prelude::*;
 
 use crate::level::{Level, SceneTheme};
+use crate::managers::scene_manager::SceneManager;
 use crate::message::Message;
-use crate::scene_manager::SceneManager;
 use crate::states::PlayerState;
 use crate::states::event::StateEvent;
 use crate::states::idle::IdelState;
@@ -136,16 +136,18 @@ impl ICharacterBody2D for Player {
             Message::singleton().signals().toggle_pause().emit();
             return;
         }
-        if let Ok(event) = event.try_cast::<InputEventKey>()
-            && event.is_pressed()
-        {
-            let current_hp = self.hp;
-            // godot_print!("键盘输入 {:?}", event.get_keycode() == Key::MINUS);
-            if event.get_keycode() == Key::MINUS {
-                self.set_hp(current_hp - 2.0);
-            }
-            if event.get_keycode() == Key::EQUAL {
-                self.set_hp(current_hp + 2.0);
+        if Os::singleton().is_debug_build() {
+            if let Ok(event) = event.try_cast::<InputEventKey>()
+                && event.is_pressed()
+            {
+                let current_hp = self.hp;
+                // godot_print!("键盘输入 {:?}", event.get_keycode() == Key::MINUS);
+                if event.get_keycode() == Key::MINUS {
+                    self.set_hp(current_hp - 2.0);
+                }
+                if event.get_keycode() == Key::EQUAL {
+                    self.set_hp(current_hp + 2.0);
+                }
             }
         }
     }

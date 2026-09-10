@@ -3,7 +3,7 @@ use godot::{
     prelude::*,
 };
 
-use crate::{audio_manager::UIAudio, message::Message};
+use crate::{managers::audio_manager::UIAudio, message::Message};
 
 #[derive(GodotClass)]
 #[class(base=Button, init)]

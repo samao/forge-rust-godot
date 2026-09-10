@@ -4,7 +4,7 @@ use godot::{
     tools::try_get_autoload_by_name,
 };
 
-use crate::{managers::save::SaveManager, message::Message, scene_manager::SceneManager};
+use crate::{managers::save::SaveManager, managers::scene_manager::SceneManager, message::Message};
 
 #[derive(GodotClass)]
 #[class(init, base=CanvasLayer)]

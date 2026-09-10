@@ -91,7 +91,8 @@ position = Vector2(1361, 179)
 
 [node name="TM1-3" parent="Transitions" unique_id=504939127 instance=ExtResource("4_jiecf")]
 target_area_name = "1-3"
-position = Vector2(33, 48)
+align_origin = true
+position = Vector2(52, 54)
 
 [node name="TM2-3" parent="Transitions" unique_id=2124864546 instance=ExtResource("4_jiecf")]
 target_area_name = "2-3"

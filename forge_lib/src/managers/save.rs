@@ -1,6 +1,6 @@
 use godot::{
     classes::{
-        AudioServer, ConfigFile, Engine, FileAccess, InputEvent, InputEventKey, Json,
+        AudioServer, ConfigFile, Engine, FileAccess, InputEvent, InputEventKey, Json, Os,
         file_access::ModeFlags, object::ConnectFlags,
     },
     global::Key,
@@ -9,7 +9,7 @@ use godot::{
     tools::try_get_autoload_by_name,
 };
 
-use crate::{player::Player, scene_manager::SceneManager};
+use crate::{managers::scene_manager::SceneManager, player::Player};
 
 #[derive(GodotClass)]
 #[class(init, base = Node2D)]
@@ -28,23 +28,25 @@ impl INode2D for SaveManager {
         self.load_save_file();
     }
     fn unhandled_key_input(&mut self, event: Gd<InputEvent>) {
-        if event.is_pressed()
-            && let Ok(event) = event.try_cast::<InputEventKey>()
-        {
-            match event.get_keycode() {
-                Key::KEY_0 => {
-                    self.create_new_game();
+        if Os::singleton().is_debug_build() {
+            if event.is_pressed()
+                && let Ok(event) = event.try_cast::<InputEventKey>()
+            {
+                match event.get_keycode() {
+                    Key::KEY_0 => {
+                        self.create_new_game();
+                    }
+                    Key::KEY_9 => {
+                        self.load_game();
+                    }
+                    Key::KEY_8 => {
+                        self.save_game();
+                    }
+                    Key::KEY_1 => self.current_slot = 1,
+                    Key::KEY_2 => self.current_slot = 2,
+                    Key::KEY_3 => self.current_slot = 3,
+                    _ => {}
                 }
-                Key::KEY_9 => {
-                    self.load_game();
-                }
-                Key::KEY_8 => {
-                    self.save_game();
-                }
-                Key::KEY_1 => self.current_slot = 1,
-                Key::KEY_2 => self.current_slot = 2,
-                Key::KEY_3 => self.current_slot = 3,
-                _ => {}
             }
         }
     }
@@ -55,6 +57,9 @@ const SETTING_FILE_PATH: &str = "user://setting.cfg";
 
 #[godot_api]
 impl SaveManager {
+    #[signal]
+    pub fn save_finished();
+
     fn get_save_path(&self) -> String {
         format!("user://save_{}.sav", self.current_slot)
     }
@@ -111,9 +116,6 @@ impl SaveManager {
     }
 
     pub fn start_on_slot(&mut self, index: u8) -> Result<(), String> {
-        if self.has_slot(index) {
-            return Err(format!("位置 {} 已经有存档了", index));
-        }
         self.current_slot = index;
         self.create_new_game();
         Ok(())
@@ -146,38 +148,55 @@ impl SaveManager {
 
     #[func]
     pub fn save_game(&mut self) {
-        godot_print!("save a point");
+        // godot_print!("save a point");
         if let Some(main_loop) = Engine::singleton().get_main_loop()
             && let Ok(tree) = main_loop.try_cast::<SceneTree>()
         {
             if let Some(player) = tree.get_first_node_in_group("Player")
                 && let Ok(player) = player.try_cast::<Player>()
             {
-                godot_print!("保存文件");
+                // godot_print!("保存文件");
                 let pos = player.get_global_position();
+                let hp = player.bind().hp;
+                let max_hp = player.bind().max_hp;
+                let dash = player.bind().dash;
+                let double_jump = player.bind().double_jump;
+                let ground_slam = player.bind().ground_slam;
+                let morph_roll = player.bind().morph_roll;
                 if let Some(mut file) =
                     FileAccess::open(self.get_save_path().as_str(), ModeFlags::WRITE)
                 {
-                    let player = player.bind();
+                    // godot_print!(
+                    //     "打开文件: {}, {}, {}, {}, {}, {}",
+                    //     pos,
+                    //     hp,
+                    //     max_hp,
+                    //     double_jump,
+                    //     ground_slam,
+                    //     morph_roll
+                    // );
                     if let Ok(transition) =
                         try_get_autoload_by_name::<SceneManager>("SceneTransition")
                     {
+                        let scene_path = transition.bind().get_current_path();
                         self.save_data = vdict!(
-                            "scene_path" => transition.bind().get_current_path(),
+                            "scene_path" => scene_path,
                             "x" => pos.x,
                             "y" => pos.y,
-                            "hp" => player.hp,
-                            "max_hp" => player.max_hp,
-                            "dash" => player.dash,
-                            "double_jump" => player.double_jump,
-                            "ground_slam" => player.ground_slam,
-                            "morph_roll" => player.morph_roll,
+                            "hp" => hp,
+                            "max_hp" => max_hp,
+                            "dash" => dash,
+                            "double_jump" => double_jump,
+                            "ground_slam" => ground_slam,
+                            "morph_roll" => morph_roll,
                             "discovered_areas" => &self.discovered_areas.to_variant(),
                             "persistent_data" => &self.persistent_data.to_variant(),
                         );
-
+                        // godot_print!("保存前： {:?}", self.save_data);
                         file.store_line(&Json::stringify(&self.save_data.to_variant()));
                         file.close();
+                        // godot_print!("保存完成");
+                        self.signals().save_finished().emit();
                     }
                 }
             }

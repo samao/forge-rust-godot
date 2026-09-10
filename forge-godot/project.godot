@@ -25,6 +25,7 @@ SceneTransition="*uid://cyn5rausjot0v"
 SaveHelper="*uid://bp3h1dh0a8mvo"
 PlayerHud="*uid://c0tlauqevu100"
 AudioHelper="*uid://cykd55enqg0pn"
+VisualEffectHelper="*uid://b1fne2stp6ee2"
 
 [display]
 

@@ -5,7 +5,7 @@ use godot::{
     tools::try_get_autoload_by_name,
 };
 
-use crate::scene_manager::SceneManager;
+use crate::managers::scene_manager::SceneManager;
 
 #[derive(Debug, GodotConvert, Var, Export, Default, Clone, PartialEq, Eq, Copy)]
 #[godot(via = GString)]

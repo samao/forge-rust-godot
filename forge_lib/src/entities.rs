@@ -1,7 +1,9 @@
+pub mod audio_tirgger;
 pub mod door;
+pub mod dust_effect;
 pub mod input_hints;
 pub mod interactive;
 pub mod light;
+pub mod player_camera;
 pub mod save_point;
 pub mod switch;
-pub mod audio_tirgger;

@@ -1,6 +1,7 @@
 use godot::{classes::AudioStream, prelude::*};
 
-use crate::{audio_manager::UIAudio, entities::audio_tirgger::AudioEffectType};
+use crate::managers::visual_effect::VisualEffectType;
+use crate::{entities::audio_tirgger::AudioEffectType, managers::audio_manager::UIAudio};
 
 #[derive(GodotClass)]
 #[class(singleton,init, base = Object)]
@@ -26,4 +27,9 @@ impl Message {
     pub fn play_music(audio: Gd<AudioStream>, effect: AudioEffectType);
     #[signal]
     pub fn play_ui_audio(audio_type: UIAudio);
+    #[signal]
+    pub fn play_effect(v_type: VisualEffectType, pos: Vector2);
+
+    #[signal]
+    pub fn camera_shake(strength: f64);
 }

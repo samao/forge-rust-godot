@@ -1,8 +1,12 @@
 use godot::{classes::Input, obj::WithBaseField, prelude::*};
 
-use crate::states::{
-    PlayerState, attack::AttackState, event::StateEvent, fall::FallState, idle::IdelState,
-    run::RunState,
+use crate::{
+    managers::visual_effect::VisualEffectType,
+    message::Message,
+    states::{
+        PlayerState, attack::AttackState, event::StateEvent, fall::FallState, idle::IdelState,
+        run::RunState,
+    },
 };
 
 pub struct JumpState {
@@ -25,10 +29,15 @@ impl JumpState {
 impl PlayerState for JumpState {
     fn enter(&mut self, player: &mut crate::player::Player) {
         godot_print!("[状态] 进入跳跃 (第{}段)", self.jump_count + 1);
+        let pos = player.base().get_global_position();
         let mut v = player.base().get_velocity();
         v.y = self.velocity;
         player.base_mut().set_velocity(v);
         player.play_anim("jump");
+        Message::singleton()
+            .signals()
+            .play_effect()
+            .emit(VisualEffectType::Jump, pos);
     }
     fn exit(&mut self, _player: &mut crate::player::Player) {
         godot_print!("[退出] 状态 跳跃");

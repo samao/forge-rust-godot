@@ -5,7 +5,7 @@ use godot::tools::try_get_autoload_by_name;
 
 use crate::level_transition::Side;
 use crate::managers::save::SaveManager;
-use crate::scene_manager::SceneManager;
+use crate::managers::scene_manager::SceneManager;
 
 #[derive(GodotClass)]
 #[class(init, base = CanvasLayer)]
@@ -82,8 +82,13 @@ impl ICanvasLayer for ScreenTitle {
             .pressed()
             .connect_other(&*self, Self::on_back_pressed);
 
-        self.on_slot_listener();
+        self.setup_slot();
     }
+}
+
+enum ButtonType {
+    New,
+    Load,
 }
 
 #[godot_api]
@@ -106,19 +111,74 @@ impl ScreenTitle {
         self.select.set_visible(true);
     }
 
-    fn on_slot_listener(&mut self) {
+    fn has_save_point(&self, index: u8) -> bool {
+        if let Ok(save_helper) = try_get_autoload_by_name::<SaveManager>("SaveHelper") {
+            return save_helper.bind().has_slot(index);
+        }
+
+        false
+    }
+
+    fn set_slot_label(&mut self, b_type: ButtonType, index: u8) {
+        let button = match b_type {
+            ButtonType::New => match index {
+                1 => &self.begin_slot1,
+                2 => &self.begin_slot2,
+                3 => &self.begin_slot3,
+                _ => unreachable!(),
+            },
+            ButtonType::Load => match index {
+                1 => &self.load_slot1,
+                2 => &self.load_slot2,
+                3 => &self.load_slot3,
+                _ => unreachable!(),
+            },
+        };
+        let has_saved = self.has_save_point(index);
+        let mut button = button.to_godot().clone();
+        match b_type {
+            ButtonType::New => {
+                button.set_text(
+                    if has_saved {
+                        format!("Replace Slot {}", index)
+                    } else {
+                        format!("Begin Slot {}", index)
+                    }
+                    .as_str(),
+                );
+            }
+            ButtonType::Load => {
+                button.set_text(
+                    if has_saved {
+                        format!("Load Slot {}", index)
+                    } else {
+                        "Empty".to_owned()
+                    }
+                    .as_str(),
+                );
+            }
+        }
+    }
+
+    fn setup_slot(&mut self) {
+        self.set_slot_label(ButtonType::New, 1);
         let on_begin_press = Callable::from_object_method(&self.to_gd(), "on_begin_pressed");
         self.begin_slot1
             .connect("pressed", &on_begin_press.bind(&[1.to_variant()]));
+        self.set_slot_label(ButtonType::New, 2);
         self.begin_slot2
             .connect("pressed", &on_begin_press.bind(&[2.to_variant()]));
+        self.set_slot_label(ButtonType::New, 3);
         self.begin_slot3
             .connect("pressed", &on_begin_press.bind(&[3.to_variant()]));
         let on_load_press = Callable::from_object_method(&self.to_gd(), "on_load_pressed");
+        self.set_slot_label(ButtonType::Load, 1);
         self.load_slot1
             .connect("pressed", &on_load_press.bind(&[1.to_variant()]));
+        self.set_slot_label(ButtonType::Load, 2);
         self.load_slot2
             .connect("pressed", &on_load_press.bind(&[2.to_variant()]));
+        self.set_slot_label(ButtonType::Load, 3);
         self.load_slot3
             .connect("pressed", &on_load_press.bind(&[3.to_variant()]));
     }

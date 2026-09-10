@@ -10,8 +10,8 @@ use godot::{
 use crate::{
     level_bounds::LevelBounds,
     level_transition::{LevelTransition, Side},
+    managers::scene_manager::SceneManager,
     player::Player,
-    scene_manager::SceneManager,
 };
 
 #[derive(GodotClass)]

@@ -61,6 +61,7 @@ _data = {
 }
 
 [node name="SceneTitle" type="ScreenTitle" unique_id=1266439091]
+layer = 2
 
 [node name="Control" type="Control" parent="." unique_id=477332243]
 layout_mode = 3

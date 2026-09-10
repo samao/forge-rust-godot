@@ -1,4 +1,8 @@
-use crate::states::{PlayerState, attack::AttackState, event::StateEvent, idle::IdelState};
+use crate::{
+    managers::visual_effect::VisualEffectType,
+    message::Message,
+    states::{PlayerState, attack::AttackState, event::StateEvent, idle::IdelState},
+};
 use godot::{classes::Input, obj::WithBaseField, prelude::*};
 
 pub struct FallState {
@@ -42,6 +46,11 @@ impl PlayerState for FallState {
                 self.time -= delta;
                 if self.time <= 0.0 {
                     if player.base().is_on_floor() {
+                        let pos = player.base().get_global_position();
+                        Message::singleton()
+                            .signals()
+                            .play_effect()
+                            .emit(VisualEffectType::Land, pos);
                         return Some(Box::new(IdelState::new()));
                     }
                 }

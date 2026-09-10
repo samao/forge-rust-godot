@@ -4,8 +4,8 @@ use godot::prelude::*;
 use godot::signal::ConnectHandle;
 use godot::tools::try_get_autoload_by_name;
 
-use crate::audio_manager::UIAudio;
 use crate::entities::interactive::Interactive;
+use crate::managers::audio_manager::UIAudio;
 use crate::managers::save::SaveManager;
 use crate::message::Message;
 
