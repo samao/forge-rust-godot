@@ -1,0 +1,10 @@
+[gd_resource type="SoundSource" format=3 uid="uid://tdncrkvd7ik8"]
+
+[ext_resource type="AudioStream" uid="uid://bp40i4d6mohgs" path="res://general/audio/attack.wav" id="1_qqjtt"]
+[ext_resource type="AudioStream" uid="uid://bx5n55c0ohytv" path="res://general/audio/jump.wav" id="2_ev5qt"]
+[ext_resource type="AudioStream" uid="uid://bjldn82wrec45" path="res://general/audio/land.wav" id="3_2jocq"]
+
+[resource]
+attack = ExtResource("1_qqjtt")
+jump = ExtResource("2_ev5qt")
+land = ExtResource("3_2jocq")
