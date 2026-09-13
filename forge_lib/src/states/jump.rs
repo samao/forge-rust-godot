@@ -33,6 +33,7 @@ impl PlayerState for JumpState {
         let mut v = player.base().get_velocity();
         v.y = self.velocity;
         player.base_mut().set_velocity(v);
+        player.play_sound("jump");
         player.play_anim("jump");
         Message::singleton()
             .signals()

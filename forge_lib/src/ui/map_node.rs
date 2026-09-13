@@ -49,7 +49,7 @@ impl IControl for MapNode {
             return;
         }
         self.base().get_node_as::<Label>("%Label").queue_free();
-        self.update();
+        // self.update();
 
         self.listener_scene_change();
     }
@@ -140,7 +140,7 @@ impl MapNode {
     }
 
     #[func]
-    fn update(&mut self) {
+    pub fn update(&mut self) {
         // godot_print!("更新它: {}", self.scene);
         self.clear_blocks();
         if let Some(scene) = ResourceLoader::singleton().load(&self.scene) {

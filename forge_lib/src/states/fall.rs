@@ -51,6 +51,7 @@ impl PlayerState for FallState {
                             .signals()
                             .play_effect()
                             .emit(VisualEffectType::Land, pos);
+                        player.play_sound("land");
                         return Some(Box::new(IdelState::new()));
                     }
                 }

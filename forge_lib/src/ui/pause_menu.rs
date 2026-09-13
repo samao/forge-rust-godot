@@ -1,10 +1,16 @@
 use godot::{
-    classes::{AudioServer, Button, CanvasLayer, Control, HSlider, ICanvasLayer, InputEvent},
+    classes::{
+        AudioServer, Button, CanvasLayer, Control, Engine, HSlider, ICanvasLayer, InputEvent,
+    },
     prelude::*,
     tools::try_get_autoload_by_name,
 };
 
-use crate::{managers::save::SaveManager, managers::scene_manager::SceneManager, message::Message};
+use crate::{
+    managers::{save::SaveManager, scene_manager::SceneManager},
+    message::Message,
+    ui::map_node::MapNode,
+};
 
 #[derive(GodotClass)]
 #[class(init, base=CanvasLayer)]
@@ -26,6 +32,8 @@ pub struct PauseMenu {
     sfx_slider: OnReady<Gd<HSlider>>,
     #[init(node = "%UiSlider")]
     ui_slider: OnReady<Gd<HSlider>>,
+    #[init(node = "%Control")]
+    map_container: OnReady<Gd<Control>>,
 }
 
 #[godot_api]
@@ -44,6 +52,8 @@ impl ICanvasLayer for PauseMenu {
             .pressed()
             .connect_other(&*self, Self::goto_to_menu);
         self.init_slider();
+        self.back_to_map();
+        self.setup_map_node();
     }
 
     fn input(&mut self, event: Gd<InputEvent>) {
@@ -67,6 +77,21 @@ impl ICanvasLayer for PauseMenu {
 }
 #[godot_api]
 impl PauseMenu {
+    fn setup_map_node(&self) {
+        let map_nodes = self.map_container.get_children();
+        godot::task::spawn(async move {
+            for node in map_nodes.iter_shared() {
+                if let Ok(mut map_node) = node.try_cast::<MapNode>() {
+                    if let Some(tree) = Engine::singleton().get_main_loop()
+                        && let Ok(tree) = tree.try_cast::<SceneTree>()
+                    {
+                        tree.signals().process_frame().to_future().await;
+                    }
+                    map_node.bind_mut().update();
+                }
+            }
+        });
+    }
     fn show_system(&mut self) {
         self.pause_screen.set_visible(false);
         self.system_screen.set_visible(true);

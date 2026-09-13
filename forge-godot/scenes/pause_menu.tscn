@@ -86,6 +86,7 @@ offset_right = 469.0
 offset_bottom = 199.0
 
 [node name="Control" type="Control" parent="Control/PauseScreen/Map" unique_id=1582012238]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 0
 scale = Vector2(0.95, 0.95)

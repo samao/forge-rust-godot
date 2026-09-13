@@ -1,7 +1,7 @@
 use godot::{
     classes::{
         AudioEffectReverb, AudioServer, AudioStream, AudioStreamPlaybackPolyphonic,
-        AudioStreamPlayer, Tween,
+        AudioStreamPlayer, AudioStreamPlayer2D, Tween, object::ConnectFlags,
     },
     prelude::*,
     tools::try_get_autoload_by_name,
@@ -57,6 +57,9 @@ pub(crate) struct AudioManager {
 
     #[init(val = Array::default())]
     tweens: Array<Gd<Tween>>,
+
+    #[init(val = vec![])]
+    spatials: Vec<Gd<AudioStreamPlayer2D>>,
 }
 
 #[godot_api]
@@ -70,12 +73,28 @@ impl INode for AudioManager {
             .signals()
             .play_ui_audio()
             .connect_other(&*self, Self::play_ui_audio);
+        self.signals()
+            .recyle_spatial()
+            .connect_self(Self::recyle_player);
         self.init_volume();
     }
 }
 
 #[godot_api]
 impl AudioManager {
+    #[signal]
+    fn recyle_spatial(ap: InstanceId);
+
+    fn recyle_player(&mut self, id: InstanceId) {
+        if let Ok(ref player) = Gd::<AudioStreamPlayer2D>::try_from_instance_id(id) {
+            if let Some(ref mut parent) = player.get_parent() {
+                godot_print!("回收空间特效播放器： {id}");
+                parent.remove_child(player);
+                self.spatials.push(player.clone());
+            }
+        }
+    }
+
     fn init_volume(&self) {
         if let Ok(mut save_helper) = try_get_autoload_by_name::<SaveManager>("SaveHelper") {
             let (music_volume, sfx_volume, ui_volume) = save_helper.bind_mut().get_volume();
@@ -187,5 +206,26 @@ impl AudioManager {
                 player.play_stream(stream);
             }
         }
+    }
+    pub fn play_spatial_sound(&mut self, audio: Gd<AudioStream>, pos: Vector2) {
+        let mut ap = self
+            .spatials
+            .pop()
+            .unwrap_or(AudioStreamPlayer2D::new_alloc());
+        self.base_mut().add_child(&ap);
+        ap.set_bus("SFX");
+        ap.set_global_position(pos);
+        ap.set_stream(&audio);
+        ap.play();
+        let instance_id = self.base().instance_id();
+        let ap_id = ap.instance_id();
+        ap.connect_flags(
+            "finished",
+            &Callable::from_fn("once_spatial_trigger", move |_| {
+                let node = Gd::<AudioManager>::from_instance_id(instance_id);
+                node.signals().recyle_spatial().emit(ap_id);
+            }),
+            ConnectFlags::ONE_SHOT,
+        );
     }
 }

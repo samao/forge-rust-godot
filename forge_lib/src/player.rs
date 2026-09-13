@@ -7,10 +7,14 @@ use godot::classes::{
 use godot::global::{Key, clampf};
 use godot::obj::{Singleton, WithBaseField};
 use godot::prelude::*;
+use godot::tools::try_get_autoload_by_name;
 
+use crate::entities::attack::AttackArea;
 use crate::level::{Level, SceneTheme};
+use crate::managers::audio_manager::AudioManager;
 use crate::managers::scene_manager::SceneManager;
 use crate::message::Message;
+use crate::resource::sounds::SoundSource;
 use crate::states::PlayerState;
 use crate::states::event::StateEvent;
 use crate::states::idle::IdelState;
@@ -55,6 +59,11 @@ pub struct Player {
     light: Option<Gd<Light2D>>,
 
     direction: Vector2,
+
+    attack_area: Option<Gd<AttackArea>>,
+
+    #[export]
+    sounds: Option<Gd<SoundSource>>,
 }
 
 #[godot_api]
@@ -84,6 +93,8 @@ impl ICharacterBody2D for Player {
             sprite: None,
             light: None,
             direction: Vector2::RIGHT,
+            attack_area: None,
+            sounds: None,
         };
         // player.switch_state(IdelState::new());
         godot_print!("Rust 玩家已经初始化");
@@ -98,6 +109,7 @@ impl ICharacterBody2D for Player {
         self.one_way_ray = self.base().try_get_node_as::<ShapeCast2D>("ShapeCast2D");
         self.sprite = self.base().try_get_node_as::<Sprite2D>("Sprite2D");
         self.light = self.base().try_get_node_as::<Light2D>("PointLight2D");
+        self.attack_area = self.base().try_get_node_as::<AttackArea>("%AttackArea");
         self.animation_player = self
             .base()
             .try_get_node_as::<AnimationPlayer>("AnimationPlayer");
@@ -187,7 +199,7 @@ impl ICharacterBody2D for Player {
         for (i, (name, remaining)) in self.timers.iter_mut().enumerate() {
             *remaining -= dt;
             if *remaining <= 0.0 {
-                godot_print!("一个超时发生: {:?}", name);
+                // godot_print!("一个超时发生: {:?}", name);
                 self.event_queue.push_back(StateEvent::TimerTimeout {
                     timer_name: name.clone(),
                 });
@@ -321,10 +333,10 @@ impl Player {
         if let Some(mut sprite) = self.sprite.clone() {
             match x_axis {
                 a @ 0.0.. if a > 0.0 => {
-                    sprite.set_flip_h(false);
+                    sprite.set_scale(Vector2::new(1.0, 1.0));
                 }
                 ..0.0 => {
-                    sprite.set_flip_h(true);
+                    sprite.set_scale(Vector2::new(-1.0, 1.0));
                 }
                 _ => {}
             }
@@ -334,7 +346,7 @@ impl Player {
     }
 
     pub fn prepar_fall(&mut self) {
-        godot_print!("从平台跳下");
+        // godot_print!("从平台跳下");
         let mut position = self.base().get_global_position();
         position.y += 4.0;
         self.base_mut().set_global_position(position);
@@ -355,8 +367,14 @@ impl Player {
         self.base_mut().set_velocity(v);
     }
 
+    pub fn set_attack_enabled(&mut self, v: bool) {
+        if let Some(ref mut attack_area) = self.attack_area {
+            attack_area.bind_mut().set_active(v);
+        }
+    }
+
     pub fn play_anim(&self, name: &str) {
-        godot_print!("播放动画: {}", name);
+        // godot_print!("播放动画: {}", name);
         match self.animation_player.clone() {
             Some(mut anim) if anim.has_animation(name) => {
                 anim.play_ex().name(name).done();
@@ -366,12 +384,20 @@ impl Player {
     }
 
     pub fn start_timer(&mut self, name: &str, duration: f32) {
-        godot_print!("添加一个计时：{} -> {}", name, duration);
+        // godot_print!("添加一个计时：{} -> {}", name, duration);
         self.timers.push((name.into(), duration));
     }
 
-    pub fn spawn_attack_hitbox(&self, damage: f32) {
-        godot_print!("生成攻击判定框，伤 {}", damage);
+    pub fn spawn_attack_hitbox(&self, _damage: f32) {
+        // godot_print!("生成攻击判定框，伤 {}", damage);
+    }
+
+    #[func]
+    pub fn take_damage(&mut self, damage: f32) {
+        self.event_queue.push_back(StateEvent::TakeDamage {
+            damage,
+            knockback: Vector2::RIGHT,
+        });
     }
 
     pub fn apply_damage(&mut self, damage: f32, knockback: Vector2) {
@@ -381,7 +407,7 @@ impl Player {
         self.health -= damage;
         self.is_invincible = true;
         self.invincible_timer = 0.2;
-        godot_print!("受伤了，剩余血量：{}", self.health);
+        // godot_print!("受伤了，剩余血量：{}", self.health);
 
         let mut v = self.base().get_velocity();
         v.x += knockback.x;
@@ -389,8 +415,27 @@ impl Player {
         self.base_mut().set_velocity(v);
 
         if self.health <= 0.0 {
-            godot_print!("玩家死亡");
+            // godot_print!("玩家死亡");
             self.signals().die().emit();
+        }
+    }
+
+    pub fn play_sound(&self, sound_type: &str) {
+        if let Some(ref sounds) = self.sounds.clone() {
+            if let Some(sound) = match sound_type {
+                "attack" => sounds.bind().attack.clone(),
+                "jump" => sounds.bind().jump.clone(),
+                "land" => sounds.bind().land.clone(),
+                _ => unreachable!(),
+            } {
+                if let Ok(mut audio_helper) =
+                    try_get_autoload_by_name::<AudioManager>("AudioHelper")
+                {
+                    audio_helper
+                        .bind_mut()
+                        .play_spatial_sound(sound, self.base().get_global_position());
+                }
+            }
         }
     }
 }
