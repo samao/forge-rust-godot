@@ -21,8 +21,8 @@ pub struct AttackArea {
 #[godot_api]
 impl IArea2D for AttackArea {
     fn ready(&mut self) {
-        self.base_mut().set_monitoring(false);
-        self.set_active(false);
+        // self.base_mut().set_monitoring(false);
+        // self.set_active(false);
     }
 }
 

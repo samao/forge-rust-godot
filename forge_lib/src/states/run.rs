@@ -2,7 +2,9 @@ use godot::classes::Input;
 use godot::obj::Singleton;
 use godot::prelude::*;
 
+use crate::states::dash::DashState;
 use crate::states::fall::FallState;
+use crate::states::hurt::HurtState;
 use crate::states::idle::IdelState;
 use crate::states::{PlayerState, attack::AttackState, event::StateEvent, jump::JumpState};
 
@@ -32,6 +34,9 @@ impl PlayerState for RunState {
             StateEvent::InputJustPressed { action } if action == "attack" => {
                 return Some(Box::new(AttackState::new(0)));
             }
+            StateEvent::InputJustPressed { action } if action == "dash" => {
+                return Some(Box::new(DashState::new()));
+            }
             StateEvent::Physics { delta: _ } => {
                 let input = Input::singleton();
                 let h = input.get_axis("left", "right");
@@ -44,6 +49,12 @@ impl PlayerState for RunState {
                 }
                 player.set_horizontal_speed(h * player.speed);
                 self.direction = h;
+            }
+            StateEvent::TakeDamage {
+                damage: _,
+                knockback: __,
+            } => {
+                return Some(Box::new(HurtState::new(0.5)));
             }
             _ => {}
         }

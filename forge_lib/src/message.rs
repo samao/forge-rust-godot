@@ -23,11 +23,15 @@ impl Message {
     pub fn toggle_pause();
     #[signal]
     pub fn game_end();
+    #[signal]
+    pub fn game_over();
 
     #[signal]
     pub fn play_music(audio: Gd<AudioStream>, effect: AudioEffectType);
     #[signal]
     pub fn play_ui_audio(audio_type: UIAudio);
+    #[signal]
+    pub fn play_spatial_audio(audio: Gd<AudioStream>, pos: Vector2);
     #[signal]
     pub fn play_effect(v_type: VisualEffectType, pos: Vector2);
 

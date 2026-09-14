@@ -1,21 +1,24 @@
 use std::collections::VecDeque;
 
+use godot::classes::node::ProcessMode;
 use godot::classes::{
     AnimationPlayer, CharacterBody2D, Engine, ICharacterBody2D, Input, InputEvent, InputEventKey,
     Light2D, Os, ShapeCast2D, Sprite2D,
 };
-use godot::global::{Key, clampf};
+use godot::global::Key;
 use godot::obj::{Singleton, WithBaseField};
 use godot::prelude::*;
 use godot::tools::try_get_autoload_by_name;
 
 use crate::entities::attack::AttackArea;
+use crate::entities::damage::DamageArea;
 use crate::level::{Level, SceneTheme};
 use crate::managers::audio_manager::AudioManager;
 use crate::managers::scene_manager::SceneManager;
 use crate::message::Message;
 use crate::resource::sounds::SoundSource;
 use crate::states::PlayerState;
+use crate::states::die::DieState;
 use crate::states::event::StateEvent;
 use crate::states::idle::IdelState;
 
@@ -82,7 +85,7 @@ impl ICharacterBody2D for Player {
             invincible_timer: 0.0,
             coyote_timer: 0.0,
             coyote_duration: 0.08,
-            hp: 20.0,
+            hp: 5.0,
             max_hp: 20.0,
             double_jump: false,
             dash: false,
@@ -172,7 +175,7 @@ impl ICharacterBody2D for Player {
         let dt = delta as f32;
         let input = Input::singleton();
 
-        for action in &["jump", "attack", "down"] {
+        for action in &["jump", "attack", "down", "dash"] {
             if input.is_action_just_pressed(*action) {
                 self.event_queue.push_back(StateEvent::InputJustPressed {
                     action: (*action).into(),
@@ -264,17 +267,46 @@ impl Player {
     #[signal]
     fn die();
 
+    pub fn get_face_direction(&self) -> f32 {
+        self.sprite
+            .clone()
+            .map(|sprite| sprite.get_scale().x)
+            .unwrap_or(1.0)
+    }
+
     fn release_player(&mut self) {
+        godot_print!("销毁玩家");
         self.base_mut().call_deferred("queue_free", &[]);
     }
 
     #[func]
     fn set_hp(&mut self, v: f32) {
-        self.hp = clampf(v as f64, 0.0, self.max_hp as f64) as f32;
+        self.hp = v.clamp(0.0, self.max_hp);
         Message::singleton()
             .signals()
             .player_health_change()
             .emit(self.hp, self.max_hp);
+        if self.hp <= 0.0 {
+            self.signals().die().emit();
+            self.switch_state(DieState::new());
+            self.set_player_disable(true);
+
+            Message::singleton().signals().game_over().emit();
+            self.release_player();
+        }
+    }
+
+    pub fn set_player_disable(&mut self, v: bool) {
+        godot_print!("关闭受伤检测");
+        if let Some(ref mut node) = self.base().try_get_node_as::<DamageArea>("%DamageArea") {
+            node.set_process_mode(if v {
+                ProcessMode::DISABLED
+            } else {
+                ProcessMode::INHERIT
+            });
+        } else {
+            godot_print!("不存在检测组件");
+        }
     }
     #[func]
     fn set_max_hp(&mut self, v: f32) {
@@ -361,6 +393,57 @@ impl Player {
         self.current_state = Some(state);
     }
 
+    pub fn play_sound_effect(&mut self, s_type: &str) {
+        let pos = self.base().get_global_position();
+        if let Some(sound) = self.sounds.clone()
+            && let Ok(sound) = sound.try_cast::<SoundSource>()
+        {
+            if let Some(sound) = match s_type {
+                "dash" => sound.bind().dash.clone(),
+                "attack" => sound.bind().attack.clone(),
+                "jump" => sound.bind().jump.clone(),
+                "land" => sound.bind().land.clone(),
+                _ => None,
+            } {
+                Message::singleton()
+                    .signals()
+                    .play_spatial_audio()
+                    .emit(&sound, pos);
+            }
+        } else {
+            godot_print!("无法播放");
+        }
+    }
+
+    pub fn create_tail_shadow(&mut self) {
+        if let Some(mut parent) = self.base().get_parent() {
+            if let Some(ref body) = self.sprite {
+                let pos = body.get_global_position();
+                let mut tail = body.duplicate_node();
+                tail.set_global_position(pos);
+                parent.add_child(&tail);
+                self.create_tail_tween(tail.upcast());
+            }
+        }
+    }
+
+    fn create_tail_tween(&mut self, mut tail: Gd<Node2D>) {
+        let mut tween = self.base_mut().create_tween();
+        let color = tail.get_modulate();
+        tween.tween_property(&tail, "modulate", &color.with_alpha(0.0).to_variant(), 0.2);
+        let finished = tween.signals().finished().to_future();
+        godot::task::spawn(async move {
+            finished.await;
+            tail.queue_free();
+        });
+    }
+
+    pub fn set_ver_speed(&mut self, y: f32) {
+        let mut v = self.base().get_velocity();
+        v.y = y;
+        self.base_mut().set_velocity(v);
+    }
+
     pub fn set_horizontal_speed(&mut self, x: f32) {
         let mut v = self.base().get_velocity();
         v.x = x;
@@ -393,11 +476,17 @@ impl Player {
     }
 
     #[func]
-    pub fn take_damage(&mut self, damage: f32) {
+    pub fn take_damage(&mut self, _pos: Vector2, dir: Vector2, damage: f32) {
+        // godot_print!("你敢扎我: {damage}");
+        let next_velocity = Vector2::splat(self.speed * 0.6) * dir.normalized();
+        self.base_mut().set_velocity(next_velocity);
         self.event_queue.push_back(StateEvent::TakeDamage {
             damage,
-            knockback: Vector2::RIGHT,
+            knockback: dir,
         });
+        let next_hp = (self.hp - damage).clamp(0.0, self.max_hp);
+        Message::singleton().signals().camera_shake().emit(20.0);
+        self.set_hp(next_hp);
     }
 
     pub fn apply_damage(&mut self, damage: f32, knockback: Vector2) {

@@ -1,8 +1,8 @@
 use godot::{classes::Input, global::godot_print, obj::Singleton};
 
 use crate::states::{
-    PlayerState, attack::AttackState, crouch::CrouchState, event::StateEvent, jump::JumpState,
-    run::RunState,
+    PlayerState, attack::AttackState, crouch::CrouchState, dash::DashState, event::StateEvent,
+    hurt::HurtState, jump::JumpState, run::RunState,
 };
 
 pub struct IdelState {
@@ -41,6 +41,9 @@ impl PlayerState for IdelState {
             StateEvent::InputPressed { action } if action == "down" => {
                 return Some(Box::new(CrouchState::new()));
             }
+            StateEvent::InputJustPressed { action } if action == "dash" => {
+                return Some(Box::new(DashState::new()));
+            }
             StateEvent::Physics { delta } => {
                 let input = Input::singleton();
                 let h = input.get_axis("left", "right");
@@ -52,6 +55,12 @@ impl PlayerState for IdelState {
                     self.breath_timer = 0.0;
                 }
                 None
+            }
+            StateEvent::TakeDamage {
+                damage: _,
+                knockback: __,
+            } => {
+                return Some(Box::new(HurtState::new(0.5)));
             }
             _ => None,
         }

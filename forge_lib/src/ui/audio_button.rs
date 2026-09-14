@@ -7,7 +7,7 @@ use crate::{managers::audio_manager::UIAudio, message::Message};
 
 #[derive(GodotClass)]
 #[class(base=Button, init)]
-struct AudioButton {
+pub struct AudioButton {
     base: Base<Button>,
 }
 

@@ -22,6 +22,7 @@ impl PlayerState for HurtState {
     fn enter(&mut self, player: &mut crate::player::Player) {
         godot_print!("[状态] 进入受伤");
         player.play_anim("hurt");
+        // player.set_horizontal_speed(0.0);
         player.start_timer("hurt_timer", self.duration);
     }
 

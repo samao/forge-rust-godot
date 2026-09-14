@@ -27,7 +27,7 @@ pub enum VisualEffectType {
 #[godot_api]
 impl INode for VisualEffect {
     fn ready(&mut self) {
-        godot_print!("好了，等待激发");
+        // godot_print!("好了，等待激发");
         Message::singleton()
             .signals()
             .play_effect()
@@ -42,7 +42,7 @@ impl INode for VisualEffect {
 #[godot_api]
 impl VisualEffect {
     fn on_play_effect(&mut self, v_type: VisualEffectType, pos: Vector2) {
-        godot_print!("播放特效: {:?} @ {:?}", v_type, pos);
+        // godot_print!("播放特效: {:?} @ {:?}", v_type, pos);
         let anim_name = match v_type {
             VisualEffectType::Jump => "jump",
             VisualEffectType::Land => "land",

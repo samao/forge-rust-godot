@@ -1,7 +1,9 @@
 pub mod attack;
 pub mod audio_tirgger;
+pub mod breakable;
 pub mod damage;
 pub mod door;
+pub mod dummy;
 pub mod dust_effect;
 pub mod hit_particle;
 pub mod input_hints;
@@ -11,3 +13,4 @@ pub mod player_camera;
 pub mod save_point;
 pub mod switch;
 pub mod test_box;
+pub mod wood;

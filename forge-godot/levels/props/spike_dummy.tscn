@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://yjycbodsd5se"]
+
+[ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="1_o6110"]
+[ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="2_hakf7"]
+[ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="3_yl4x3"]
+[ext_resource type="Texture2D" uid="uid://dj8s5hx42ysra" path="res://general/sprites/props_destructible.png" id="4_v5vgs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
+size = Vector2(14, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvhbo"]
+atlas = ExtResource("4_v5vgs")
+region = Rect2(16, 51, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cecwr"]
+atlas = ExtResource("4_v5vgs")
+region = Rect2(33, 16, 14, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifow5"]
+size = Vector2(14, 31)
+
+[node name="SpikeDummy" type="Dummy" unique_id=1891621179]
+particles = Array[HitParticleSetting]([ExtResource("1_o6110"), ExtResource("2_hakf7")])
+
+[node name="DamageArea" type="DamageArea" parent="." unique_id=1816479377]
+audio = ExtResource("3_yl4x3")
+offset = Vector2(0, -30)
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=260065296]
+position = Vector2(0, -24.5)
+shape = SubResource("RectangleShape2D_wvhbo")
+
+[node name="Base" type="Sprite2D" parent="." unique_id=845152510]
+position = Vector2(0, -6)
+texture = SubResource("AtlasTexture_wvhbo")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=1966207394]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+rotation = 0.010228896
+scale = Vector2(0.99999994, 0.99999994)
+texture = SubResource("AtlasTexture_cecwr")
+offset = Vector2(0, -16)
+
+[node name="AttackArea" type="AttackArea" parent="." unique_id=437893229]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=2023536989]
+position = Vector2(0, -24.5)
+shape = SubResource("RectangleShape2D_ifow5")
+debug_color = Color(0.58777714, 0.70196074, 0.36837792, 0.41960785)

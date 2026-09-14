@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cgchua14e28bs" path="res://levels/tilesets/sprites/light_stream.jpg" id="6_n6qnx"]
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="8_j3mwe"]
 [ext_resource type="AudioStream" uid="uid://bfw1oiiam3o32" path="res://music/forest_01.ogg" id="9_afb11"]
+[ext_resource type="PackedScene" uid="uid://ctjtwr34xirg" path="res://levels/props/dummy.tscn" id="10_ye2jv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_518qc"]
 texture = ExtResource("1_xby24")
@@ -993,3 +994,6 @@ position = Vector2(1670, 67)
 [node name="AudioTrigger" type="AudioTrigger" parent="." unique_id=769279318]
 stream = ExtResource("9_afb11")
 effect_type = "LARGE"
+
+[node name="Dummy" parent="." unique_id=1891621179 instance=ExtResource("10_ye2jv")]
+position = Vector2(1108, 167)

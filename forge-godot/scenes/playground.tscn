@@ -5,12 +5,23 @@
 [ext_resource type="PackedScene" uid="uid://lyslvee0784i" path="res://scenes/player_spawn.tscn" id="4_mm0a5"]
 [ext_resource type="PackedScene" uid="uid://5aqkp5mrfi3y" path="res://general/door_and_open/door.tscn" id="4_q8s1k"]
 [ext_resource type="PackedScene" uid="uid://45dh57ttxsqk" path="res://general/door_and_open/switch.tscn" id="5_mm0a5"]
+[ext_resource type="PackedScene" uid="uid://ctjtwr34xirg" path="res://levels/props/dummy.tscn" id="6_mrac1"]
 [ext_resource type="PackedScene" uid="uid://d3nndvpe73n81" path="res://general/save_point/save_point.tscn" id="6_o6wi6"]
+[ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="7_2bfhc"]
 [ext_resource type="AudioStream" uid="uid://dg3ow1sp3jqga" path="res://music/dungeon_01.ogg" id="7_emj6c"]
-[ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="8_mrac1"]
+[ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="8_osidk"]
+[ext_resource type="PackedScene" uid="uid://chl13gog1lb34" path="res://levels/props/crate.tscn" id="9_2q4k0"]
+[ext_resource type="PackedScene" uid="uid://yjycbodsd5se" path="res://levels/props/spike_dummy.tscn" id="10_j30dx"]
+[ext_resource type="HitParticleSetting" uid="uid://clt5fxf8xeepf" path="res://general/visual_effect/particle_settings/hit_particle_setting_stone_small.tres" id="12_fn4oh"]
+[ext_resource type="AudioStream" uid="uid://cgdde6ueambi8" path="res://general/audio/boom.wav" id="12_rlvb3"]
+[ext_resource type="HitParticleSetting" uid="uid://bijgg1l5ugty0" path="res://general/visual_effect/particle_settings/hit_particle_setting_stone.tres" id="13_j30dx"]
+[ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="13_k63md"]
+
+[sub_resource type="HitParticleSetting" id="HitParticleSetting_x1amm"]
+count = 20
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
-size = Vector2(32, 64)
+size = Vector2(64, 224)
 
 [node name="playground" type="Level" unique_id=1036710843]
 theme = "Dark"
@@ -20,23 +31,6 @@ enabled = false
 color = Color(0, 0, 0, 1)
 energy = 0.6
 blend_mode = 2
-
-[node name="Control" type="Control" parent="." unique_id=477332243]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_lock_ = true
-
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1462949270]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Tilemaps" type="Node" parent="." unique_id=619683446]
 
@@ -71,15 +65,31 @@ door = NodePath("../Door")
 z_index = 1
 position = Vector2(969, 229)
 
-[node name="Torchs" type="Node" parent="." unique_id=448938680]
+[node name="Props" type="Node" parent="." unique_id=448938680]
 
-[node name="Torch" parent="Torchs" unique_id=1895622663 instance=ExtResource("2_kddj0")]
+[node name="TorchLeft" parent="Props" unique_id=1895622663 instance=ExtResource("2_kddj0")]
 z_index = 2
 position = Vector2(79, 198)
 
-[node name="Torch2" parent="Torchs" unique_id=1077002568 instance=ExtResource("2_kddj0")]
+[node name="TorchRIght" parent="Props" unique_id=1077002568 instance=ExtResource("2_kddj0")]
 z_index = 2
 position = Vector2(890, 200)
+
+[node name="Dummy" parent="Props" unique_id=1311069845 instance=ExtResource("6_mrac1")]
+shake_count = 6
+particles = Array[HitParticleSetting]([ExtResource("7_2bfhc"), ExtResource("8_osidk"), SubResource("HitParticleSetting_x1amm")])
+position = Vector2(543, 232)
+
+[node name="Crate" parent="Props" unique_id=258319214 instance=ExtResource("9_2q4k0")]
+z_index = 1
+position = Vector2(815, 214)
+
+[node name="Crate2" parent="Props" unique_id=1128083717 instance=ExtResource("9_2q4k0")]
+z_index = 1
+position = Vector2(197, 214)
+
+[node name="SpikeDummy" parent="Props" unique_id=1891621179 instance=ExtResource("10_j30dx")]
+position = Vector2(385, 198)
 
 [node name="SavePoint" parent="." unique_id=2007735295 instance=ExtResource("6_o6wi6")]
 z_index = 1
@@ -89,16 +99,26 @@ position = Vector2(1089, 227.99998)
 stream = ExtResource("7_emj6c")
 effect_type = "SMALL"
 
-[node name="Slim_Boss" type="Enemy" parent="." unique_id=764772962]
+[node name="Wall_break" type="Node2D" parent="." unique_id=341891725]
+z_index = 1
+position = Vector2(671, 282)
 
-[node name="DamageArea" type="DamageArea" parent="Slim_Boss" unique_id=1809239468]
-audio = ExtResource("8_mrac1")
-position = Vector2(748, 147)
+[node name="TileMapLayer" type="TileMapLayer" parent="Wall_break" unique_id=998914782]
+tile_map_data = PackedByteArray("AAD///z/AAAQAA0AAAD///3/AAAQAA0AAAD///7/AAAQAA0AAAD/////AAAQAA0AAAAAAPz/AAARAA0AAAAAAP3/AAARAA0AAAAAAP7/AAARAA0AAAAAAP//AAARAA0AAAD///n/AAAQAA0AAAD///r/AAAQAA0AAAD///v/AAAQAA0AAAAAAPn/AAARAA0AAAAAAPr/AAARAA0AAAAAAPv/AAARAA0AAAA=")
+tile_set = ExtResource("1_qchbg")
+
+[node name="Breakable" type="Breakable" parent="Wall_break" unique_id=431439096]
+hp = 10.0
+particles = Array[HitParticleSetting]([ExtResource("13_j30dx"), ExtResource("12_fn4oh")])
+audio = ExtResource("12_rlvb3")
+
+[node name="DamageArea" type="DamageArea" parent="Wall_break/Breakable" unique_id=1487517572]
+audio = ExtResource("13_k63md")
+offset = Vector2(0, 32)
+position = Vector2(0, -112)
 collision_layer = 0
 collision_mask = 16
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Slim_Boss/DamageArea" unique_id=1357247692]
-z_index = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_break/Breakable/DamageArea" unique_id=327865696]
 shape = SubResource("RectangleShape2D_wvhbo")
-debug_color = Color(0.38039216, 0.2627451, 0.7019608, 1)

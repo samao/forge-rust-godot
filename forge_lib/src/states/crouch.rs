@@ -1,7 +1,7 @@
 use godot::prelude::*;
 
 use crate::states::{
-    PlayerState, event::StateEvent, fall::FallState, idle::IdelState, jump::JumpState,
+    PlayerState, dash::DashState, event::StateEvent, fall::FallState, idle::IdelState, jump::JumpState
 };
 
 pub struct CrouchState;
@@ -34,6 +34,9 @@ impl PlayerState for CrouchState {
                     return Some(Box::new(FallState::new()));
                 }
                 return Some(Box::new(JumpState::new(player.jump_velocity, 0)));
+            }
+            StateEvent::InputJustPressed { action } if action == "dash" => {
+                return Some(Box::new(DashState::new()));
             }
             StateEvent::InputJustRelease { action } if action == "down" => {
                 return Some(Box::new(IdelState::new()));

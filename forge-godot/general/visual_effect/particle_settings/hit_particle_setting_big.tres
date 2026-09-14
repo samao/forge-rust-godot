@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dj8s5hx42ysra" path="res://general/sprites/props_destructible.png" id="1_ws8kp"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mf4i8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ws8kp"]
 atlas = ExtResource("1_ws8kp")
-region = Rect2(111, 6, 8, 11)
+region = Rect2(127, 7, 2, 2)
 
 [resource]
-texture = SubResource("AtlasTexture_mf4i8")
+texture = SubResource("AtlasTexture_ws8kp")

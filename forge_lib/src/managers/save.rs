@@ -1,7 +1,7 @@
 use godot::{
     classes::{
         AudioServer, ConfigFile, Engine, FileAccess, InputEvent, InputEventKey, Json, Os,
-        file_access::ModeFlags, object::ConnectFlags,
+        file_access::ModeFlags, node::ProcessMode, object::ConnectFlags,
     },
     global::Key,
     obj::WithBaseField,
@@ -148,7 +148,7 @@ impl SaveManager {
 
     #[func]
     pub fn save_game(&mut self) {
-        // godot_print!("save a point");
+        godot_print!("save a point");
         if let Some(main_loop) = Engine::singleton().get_main_loop()
             && let Ok(tree) = main_loop.try_cast::<SceneTree>()
         {
@@ -315,6 +315,7 @@ impl SaveManager {
                 player.bind_mut().ground_slam = ground_slam;
                 player.bind_mut().morph_roll = morph_roll;
                 player.set_global_position(Vector2 { x, y });
+                player.set_process_mode(ProcessMode::INHERIT);
             } else {
                 godot_print!("没有玩家呢");
             }

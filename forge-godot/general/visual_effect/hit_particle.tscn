@@ -6,12 +6,15 @@ emission_shape = 1
 emission_sphere_radius = 3.0
 initial_velocity_min = 50.0
 initial_velocity_max = 80.0
+gravity = Vector3(0, 50, 0)
 scale_min = 0.9
 scale_max = 1.1999999
 
 [node name="HitParticle" type="HitParticle" unique_id=326214326]
-z_index = 2
+z_index = 5
 emitting = false
+amount_ratio = 0.4795
+lifetime = 0.39
 one_shot = true
 speed_scale = 1.42
 explosiveness = 0.9

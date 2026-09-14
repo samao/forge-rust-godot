@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://chl13gog1lb34"]
+
+[ext_resource type="Texture2D" uid="uid://dj8s5hx42ysra" path="res://general/sprites/props_destructible.png" id="1_226g3"]
+[ext_resource type="HitParticleSetting" uid="uid://h5dcq6toorv4" path="res://general/visual_effect/particle_settings/hit_particle_setting_big.tres" id="2_dvm4l"]
+[ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="3_hdvq3"]
+[ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="4_rvin7"]
+[ext_resource type="AudioStream" uid="uid://llqeny2gc0k8" path="res://general/audio/break_wood.wav" id="5_qii2l"]
+[ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="6_kmawh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvhbo"]
+atlas = ExtResource("1_226g3")
+region = Rect2(53, 28, 39, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifow5"]
+size = Vector2(38, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
+size = Vector2(36, 30)
+
+[node name="Crate" type="Crate" unique_id=983970542]
+texture = SubResource("AtlasTexture_wvhbo")
+
+[node name="Breakable" type="Breakable" parent="." unique_id=2143819431]
+particles = Array[HitParticleSetting]([ExtResource("2_dvm4l"), ExtResource("3_hdvq3"), ExtResource("4_rvin7")])
+audio = ExtResource("5_qii2l")
+unique_name_in_owner = true
+
+[node name="DamageArea" type="DamageArea" parent="Breakable" unique_id=495741422]
+audio = ExtResource("6_kmawh")
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Breakable/DamageArea" unique_id=112807883]
+shape = SubResource("RectangleShape2D_ifow5")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=417045201]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1424697125]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_wvhbo")
+debug_color = Color(0.70196074, 0.22230455, 0.0526137, 0.41960785)

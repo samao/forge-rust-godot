@@ -7,4 +7,5 @@ atlas = ExtResource("1_pk21q")
 region = Rect2(120, 12, 4, 4)
 
 [resource]
+count = 12
 texture = SubResource("AtlasTexture_pk21q")

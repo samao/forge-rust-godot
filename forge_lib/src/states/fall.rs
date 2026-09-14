@@ -1,7 +1,10 @@
 use crate::{
     managers::visual_effect::VisualEffectType,
     message::Message,
-    states::{PlayerState, attack::AttackState, event::StateEvent, idle::IdelState},
+    states::{
+        PlayerState, attack::AttackState, dash::DashState, event::StateEvent, hurt::HurtState,
+        idle::IdelState,
+    },
 };
 use godot::{classes::Input, obj::WithBaseField, prelude::*};
 
@@ -56,8 +59,19 @@ impl PlayerState for FallState {
                     }
                 }
             }
+            StateEvent::InputJustPressed { action } if action == "dash" => {
+                if player.base().get_velocity().y.abs() < player.speed * 0.5 {
+                    return Some(Box::new(DashState::new()));
+                }
+            }
             StateEvent::InputJustPressed { action } if action == "attack" => {
                 return Some(Box::new(AttackState::new(0)));
+            }
+            StateEvent::TakeDamage {
+                damage: _,
+                knockback: __,
+            } => {
+                return Some(Box::new(HurtState::new(0.5)));
             }
             _ => {}
         }

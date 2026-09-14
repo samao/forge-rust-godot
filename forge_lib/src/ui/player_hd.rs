@@ -57,6 +57,7 @@ impl PlayerHud {
     fn on_health_change(&mut self, hp: f32, max_hp: f32) {
         let percent = hp / max_hp;
         // let size = self.hp_container.get_size();
+        godot_print!("血条更新: {hp} / {max_hp} = {percent}");
         // self.hp_container.set_size(size + Vector2::new(22.0, 0.0));
         // godot_print!("{}/{} == {}", hp, max_hp, percent);
         self.hp_bar.set_value(percent as f64);

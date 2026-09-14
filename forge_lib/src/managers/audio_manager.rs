@@ -73,6 +73,10 @@ impl INode for AudioManager {
             .signals()
             .play_ui_audio()
             .connect_other(&*self, Self::play_ui_audio);
+        Message::singleton()
+            .signals()
+            .play_spatial_audio()
+            .connect_other(&*self, Self::play_spatial_sound);
         self.signals()
             .recyle_spatial()
             .connect_self(Self::recyle_player);
@@ -88,7 +92,7 @@ impl AudioManager {
     fn recyle_player(&mut self, id: InstanceId) {
         if let Ok(ref player) = Gd::<AudioStreamPlayer2D>::try_from_instance_id(id) {
             if let Some(ref mut parent) = player.get_parent() {
-                godot_print!("回收空间特效播放器： {id}");
+                // godot_print!("回收空间特效播放器： {id}");
                 parent.remove_child(player);
                 self.spatials.push(player.clone());
             }

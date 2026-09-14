@@ -22,6 +22,9 @@ pub struct DamageArea {
 
     #[init(load = "uid://cpi7sdopbcndq")]
     hit_particle: OnReady<Gd<HitParticleSetting>>,
+    #[export]
+    #[init(val = Vector2::ZERO)]
+    offset: Vector2,
 }
 
 #[godot_api]
@@ -38,11 +41,20 @@ impl DamageArea {
     fn on_attacked(&mut self, area: Gd<Area2D>) {
         if let Ok(attack_area) = area.try_cast::<AttackArea>() {
             if let Some(ref mut parent) = self.base().get_parent() {
-                // godot_print!("{:?}", parent);
-                parent.call_deferred(
-                    "take_damage",
-                    &[attack_area.bind().get_damage().to_variant()],
-                );
+                let attack_pos = self.base().get_global_position() + self.offset;
+                let pos = attack_area.get_global_position().direction_to(attack_pos);
+                if parent.has_method("take_damage") {
+                    if let Err(msg) = parent.try_call_deferred(
+                        "take_damage",
+                        &[
+                            attack_pos.to_variant(),
+                            pos.to_variant(),
+                            attack_area.bind().get_damage().to_variant(),
+                        ],
+                    ) {
+                        godot_print!("{:?}", msg);
+                    }
+                }
 
                 if let Some(audio) = self.audio.clone() {
                     if let Ok(mut audio_helper) =
@@ -57,14 +69,17 @@ impl DamageArea {
                 Message::singleton()
                     .signals()
                     .play_effect()
-                    .emit(VisualEffectType::Hit, pos);
+                    .emit(VisualEffectType::Hit, pos + self.offset);
             }
+            // self.base_mut()
+            //     .call_deferred("make_invulnerable", &[1.0.to_variant()]);
         }
     }
 
-    pub fn make_invulnerable(&mut self, duration: Option<f64>) {
-        let duration = duration.unwrap_or(1.0);
+    #[func]
+    pub fn make_invulnerable(&mut self, duration: f64) {
         self.base_mut().set_process_mode(ProcessMode::DISABLED);
+        godot_print!("无敌了{duration}");
         self.base().get_tree().create_timer(duration).connect_flags(
             "timeout",
             &Callable::from_object_method(&self.to_gd(), "recovery_invulnerable"),
@@ -74,6 +89,7 @@ impl DamageArea {
 
     #[func]
     fn recovery_invulnerable(&mut self) {
+        godot_print!("BU无敌了");
         self.base_mut().set_process_mode(ProcessMode::INHERIT);
     }
 }

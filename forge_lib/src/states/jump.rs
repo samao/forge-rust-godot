@@ -4,8 +4,8 @@ use crate::{
     managers::visual_effect::VisualEffectType,
     message::Message,
     states::{
-        PlayerState, attack::AttackState, event::StateEvent, fall::FallState, idle::IdelState,
-        run::RunState,
+        PlayerState, attack::AttackState, dash::DashState, event::StateEvent, fall::FallState,
+        hurt::HurtState, idle::IdelState, run::RunState,
     },
 };
 
@@ -56,6 +56,11 @@ impl PlayerState for JumpState {
                     self.jump_count + 1,
                 )));
             }
+            StateEvent::InputJustPressed { action } if action == "dash" => {
+                if player.base().get_velocity().y.abs() < player.speed * 0.5 {
+                    return Some(Box::new(DashState::new()));
+                }
+            }
             StateEvent::InputJustPressed { action } if action == "attack" => {
                 return Some(Box::new(AttackState::new(0)));
             }
@@ -86,6 +91,12 @@ impl PlayerState for JumpState {
                 if h != 0.0 {
                     player.set_horizontal_speed(h * player.speed * 0.8);
                 }
+            }
+            StateEvent::TakeDamage {
+                damage: _,
+                knockback: __,
+            } => {
+                return Some(Box::new(HurtState::new(0.5)));
             }
             _ => {}
         }

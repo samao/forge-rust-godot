@@ -47,6 +47,10 @@ impl PlayerState for AttackState {
                     player.spawn_attack_hitbox(30.0);
                     // godot_print!("攻击判断框生成");
                 }
+
+                let input = Input::singleton();
+                let h = input.get_axis("left", "right");
+                player.set_horizontal_speed(h * player.speed * 0.5);
             }
             StateEvent::InputJustPressed { action } if action == "attack" && self.combo < 1 => {
                 return Some(Box::new(AttackState::new(self.combo + 1)));
