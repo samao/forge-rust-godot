@@ -5,7 +5,7 @@ use crate::{
     message::Message,
     states::{
         PlayerState, attack::AttackState, dash::DashState, event::StateEvent, fall::FallState,
-        hurt::HurtState, idle::IdelState, run::RunState,
+        hurt::HurtState, idle::IdelState, run::RunState, slam::SlamState,
     },
 };
 
@@ -57,12 +57,17 @@ impl PlayerState for JumpState {
                 )));
             }
             StateEvent::InputJustPressed { action } if action == "dash" => {
-                if player.base().get_velocity().y.abs() < player.speed * 0.5 {
+                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
                     return Some(Box::new(DashState::new()));
                 }
             }
             StateEvent::InputJustPressed { action } if action == "attack" => {
                 return Some(Box::new(AttackState::new(0)));
+            }
+            StateEvent::InputPressed { action } if action == "down" => {
+                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
+                    return Some(Box::new(SlamState::new()));
+                }
             }
             StateEvent::InputJustRelease { action } if action == "jump" => {
                 let v = player.base().get_velocity();

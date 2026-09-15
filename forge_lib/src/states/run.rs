@@ -6,6 +6,7 @@ use crate::states::dash::DashState;
 use crate::states::fall::FallState;
 use crate::states::hurt::HurtState;
 use crate::states::idle::IdelState;
+use crate::states::morph::MorphState;
 use crate::states::{PlayerState, attack::AttackState, event::StateEvent, jump::JumpState};
 
 pub struct RunState {
@@ -36,6 +37,9 @@ impl PlayerState for RunState {
             }
             StateEvent::InputJustPressed { action } if action == "dash" => {
                 return Some(Box::new(DashState::new()));
+            }
+            StateEvent::InputJustPressed { action } if action == "roll" => {
+                return Some(Box::new(MorphState::new()));
             }
             StateEvent::Physics { delta: _ } => {
                 let input = Input::singleton();

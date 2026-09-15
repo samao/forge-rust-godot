@@ -2,7 +2,7 @@ use godot::{classes::Input, global::godot_print, obj::Singleton};
 
 use crate::states::{
     PlayerState, attack::AttackState, crouch::CrouchState, dash::DashState, event::StateEvent,
-    hurt::HurtState, jump::JumpState, run::RunState,
+    hurt::HurtState, jump::JumpState, morph::MorphState, run::RunState,
 };
 
 pub struct IdelState {
@@ -43,6 +43,9 @@ impl PlayerState for IdelState {
             }
             StateEvent::InputJustPressed { action } if action == "dash" => {
                 return Some(Box::new(DashState::new()));
+            }
+            StateEvent::InputJustPressed { action } if action == "roll" => {
+                return Some(Box::new(MorphState::new()));
             }
             StateEvent::Physics { delta } => {
                 let input = Input::singleton();

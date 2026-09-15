@@ -11,7 +11,9 @@ pub mod fall;
 pub mod hurt;
 pub mod idle;
 pub mod jump;
+pub mod morph;
 pub mod run;
+pub mod slam;
 use event::StateEvent;
 
 pub trait PlayerState: Send + Sync {

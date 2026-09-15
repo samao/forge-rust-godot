@@ -1,23 +1,23 @@
-[gd_scene format=3 uid="uid://chl13gog1lb34"]
+[gd_scene format=3 uid="uid://lq67up5twa32"]
 
-[ext_resource type="HitParticleSetting" uid="uid://h5dcq6toorv4" path="res://general/visual_effect/particle_settings/hit_particle_setting_big.tres" id="2_dvm4l"]
-[ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="3_hdvq3"]
-[ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="4_rvin7"]
-[ext_resource type="AudioStream" uid="uid://llqeny2gc0k8" path="res://general/audio/break_wood.wav" id="5_qii2l"]
-[ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="6_kmawh"]
+[ext_resource type="HitParticleSetting" uid="uid://h5dcq6toorv4" path="res://general/visual_effect/particle_settings/hit_particle_setting_big.tres" id="1_bijco"]
+[ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="2_be8x2"]
+[ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="3_qarr2"]
+[ext_resource type="AudioStream" uid="uid://llqeny2gc0k8" path="res://general/audio/break_wood.wav" id="4_k2goh"]
+[ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="5_vovk5"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ujanv"]
 load_path = "res://.godot/imported/props_destructible.png-f1d05037d5d5fd1767d271e5f5cebf40.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dvm4l"]
 atlas = SubResource("CompressedTexture2D_ujanv")
-region = Rect2(53, 28, 39, 34)
+region = Rect2(109, 38, 22, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
-size = Vector2(36, 30)
+size = Vector2(22, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ifow5"]
-size = Vector2(38, 34)
+size = Vector2(22, 24)
 
 [node name="Crate" type="Crate" unique_id=983970542]
 texture = SubResource("AtlasTexture_dvm4l")
@@ -25,17 +25,16 @@ texture = SubResource("AtlasTexture_dvm4l")
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1761573128]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1424697125]
-position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_wvhbo")
 debug_color = Color(0.70196074, 0.22230455, 0.0526137, 0.41960785)
 
 [node name="Breakable" type="Breakable" parent="." unique_id=2143819431]
-particles = Array[HitParticleSetting]([ExtResource("2_dvm4l"), ExtResource("3_hdvq3"), ExtResource("4_rvin7")])
-audio = ExtResource("5_qii2l")
+particles = Array[HitParticleSetting]([ExtResource("1_bijco"), ExtResource("2_be8x2"), ExtResource("3_qarr2")])
+audio = ExtResource("4_k2goh")
 unique_name_in_owner = true
 
 [node name="DamageArea" type="DamageArea" parent="Breakable" unique_id=495741422]
-audio = ExtResource("6_kmawh")
+audio = ExtResource("5_vovk5")
 collision_layer = 0
 collision_mask = 16
 monitorable = false

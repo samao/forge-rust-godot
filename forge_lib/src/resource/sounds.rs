@@ -16,4 +16,10 @@ pub struct SoundSource {
     #[export]
     #[init(val = None)]
     pub dash: Option<Gd<AudioStream>>,
+    #[export]
+    #[init(val = None)]
+    pub slam: Option<Gd<AudioStream>>,
+    #[export]
+    #[init(val = None)]
+    pub morph: Option<Gd<AudioStream>>,
 }

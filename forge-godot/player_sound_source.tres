@@ -4,9 +4,13 @@
 [ext_resource type="AudioStream" uid="uid://b3fhksv5li6ak" path="res://general/audio/dash.wav" id="2_2jocq"]
 [ext_resource type="AudioStream" uid="uid://bx5n55c0ohytv" path="res://general/audio/jump.wav" id="2_ev5qt"]
 [ext_resource type="AudioStream" uid="uid://bjldn82wrec45" path="res://general/audio/land.wav" id="3_2jocq"]
+[ext_resource type="AudioStream" uid="uid://cgdde6ueambi8" path="res://general/audio/boom.wav" id="5_2jocq"]
+[ext_resource type="AudioStream" uid="uid://beh4ri4clilew" path="res://general/audio/morph.wav" id="5_3lyi3"]
 
 [resource]
 attack = ExtResource("1_qqjtt")
 jump = ExtResource("2_ev5qt")
 land = ExtResource("3_2jocq")
 dash = ExtResource("2_2jocq")
+slam = ExtResource("5_2jocq")
+morph = ExtResource("5_3lyi3")

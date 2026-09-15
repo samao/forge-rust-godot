@@ -3,7 +3,7 @@ use crate::{
     message::Message,
     states::{
         PlayerState, attack::AttackState, dash::DashState, event::StateEvent, hurt::HurtState,
-        idle::IdelState,
+        idle::IdelState, slam::SlamState,
     },
 };
 use godot::{classes::Input, obj::WithBaseField, prelude::*};
@@ -59,8 +59,13 @@ impl PlayerState for FallState {
                     }
                 }
             }
+            StateEvent::InputJustPressed { action } if action == "down" => {
+                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
+                    return Some(Box::new(SlamState::new()));
+                }
+            }
             StateEvent::InputJustPressed { action } if action == "dash" => {
-                if player.base().get_velocity().y.abs() < player.speed * 0.5 {
+                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
                     return Some(Box::new(DashState::new()));
                 }
             }

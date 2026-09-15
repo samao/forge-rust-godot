@@ -2,8 +2,8 @@ use std::collections::VecDeque;
 
 use godot::classes::node::ProcessMode;
 use godot::classes::{
-    AnimationPlayer, CharacterBody2D, Engine, ICharacterBody2D, Input, InputEvent, InputEventKey,
-    Light2D, Os, ShapeCast2D, Sprite2D,
+    AnimationPlayer, CharacterBody2D, CollisionShape2D, Engine, ICharacterBody2D, Input,
+    InputEvent, InputEventKey, Light2D, Os, ShapeCast2D, Sprite2D,
 };
 use godot::global::Key;
 use godot::obj::{Singleton, WithBaseField};
@@ -63,6 +63,7 @@ pub struct Player {
 
     direction: Vector2,
 
+    slam_attack: Option<Gd<AttackArea>>,
     attack_area: Option<Gd<AttackArea>>,
 
     #[export]
@@ -98,6 +99,7 @@ impl ICharacterBody2D for Player {
             direction: Vector2::RIGHT,
             attack_area: None,
             sounds: None,
+            slam_attack: None,
         };
         // player.switch_state(IdelState::new());
         godot_print!("Rust 玩家已经初始化");
@@ -113,6 +115,7 @@ impl ICharacterBody2D for Player {
         self.sprite = self.base().try_get_node_as::<Sprite2D>("Sprite2D");
         self.light = self.base().try_get_node_as::<Light2D>("PointLight2D");
         self.attack_area = self.base().try_get_node_as::<AttackArea>("%AttackArea");
+        self.slam_attack = self.base().try_get_node_as::<AttackArea>("%SlamAttackArea");
         self.animation_player = self
             .base()
             .try_get_node_as::<AnimationPlayer>("AnimationPlayer");
@@ -143,6 +146,18 @@ impl ICharacterBody2D for Player {
     }
 
     fn input(&mut self, event: Gd<InputEvent>) {
+        for action in &["jump", "attack", "down", "dash", "roll"] {
+            if event.clone().is_action_pressed(*action) {
+                self.event_queue.push_back(StateEvent::InputJustPressed {
+                    action: (*action).into(),
+                });
+            }
+            if event.is_action_released(*action) {
+                self.event_queue.push_back(StateEvent::InputJustRelease {
+                    action: (*action).into(),
+                });
+            }
+        }
         if event.is_action_pressed("action") {
             Message::singleton().signals().interactive().emit();
             return;
@@ -175,21 +190,9 @@ impl ICharacterBody2D for Player {
         let dt = delta as f32;
         let input = Input::singleton();
 
-        for action in &["jump", "attack", "down", "dash"] {
-            if input.is_action_just_pressed(*action) {
-                self.event_queue.push_back(StateEvent::InputJustPressed {
-                    action: (*action).into(),
-                });
-            }
-
+        for action in &["jump", "attack", "down", "dash", "action"] {
             if input.is_action_pressed(*action) {
                 self.event_queue.push_back(StateEvent::InputPressed {
-                    action: (*action).into(),
-                });
-            }
-
-            if input.is_action_just_released(*action) {
-                self.event_queue.push_back(StateEvent::InputJustRelease {
                     action: (*action).into(),
                 });
             }
@@ -277,6 +280,10 @@ impl Player {
     fn release_player(&mut self) {
         godot_print!("销毁玩家");
         self.base_mut().call_deferred("queue_free", &[]);
+    }
+
+    pub fn set_gravity_disable(&mut self, v: bool) {
+        self.gravity = if !v { 1200.0 } else { 0.0 };
     }
 
     #[func]
@@ -403,6 +410,8 @@ impl Player {
                 "attack" => sound.bind().attack.clone(),
                 "jump" => sound.bind().jump.clone(),
                 "land" => sound.bind().land.clone(),
+                "slam" => sound.bind().slam.clone(),
+                "morph" => sound.bind().morph.clone(),
                 _ => None,
             } {
                 Message::singleton()
@@ -475,17 +484,39 @@ impl Player {
         // godot_print!("生成攻击判定框，伤 {}", damage);
     }
 
+    pub fn set_slam_active(&mut self, v: bool) {
+        godot_print!("设置slam attack, {v}");
+        if let Some(mut attack) = self.slam_attack.clone() {
+            attack.set_monitorable(v);
+        }
+    }
+
+    pub fn set_morph_roll(&mut self, v: bool) {
+        if let Some(mut stand_shape) = self
+            .base()
+            .try_get_node_as::<CollisionShape2D>("%Stand_Collision")
+            && let Some(mut morph_shape) = self
+                .base()
+                .try_get_node_as::<CollisionShape2D>("%Morph_Roll_Collision")
+        {
+            stand_shape.set_disabled(v);
+            morph_shape.set_disabled(!v);
+        } else {
+            godot_print!("没有碰撞形状");
+        }
+    }
+
     #[func]
     pub fn take_damage(&mut self, _pos: Vector2, dir: Vector2, damage: f32) {
         // godot_print!("你敢扎我: {damage}");
-        let next_velocity = Vector2::splat(self.speed * 0.6) * dir.normalized();
+        let next_velocity = Vector2::splat(self.speed * 0.8) * dir.normalized();
         self.base_mut().set_velocity(next_velocity);
         self.event_queue.push_back(StateEvent::TakeDamage {
             damage,
             knockback: dir,
         });
         let next_hp = (self.hp - damage).clamp(0.0, self.max_hp);
-        Message::singleton().signals().camera_shake().emit(20.0);
+        Message::singleton().signals().camera_shake().emit(10.0);
         self.set_hp(next_hp);
     }
 

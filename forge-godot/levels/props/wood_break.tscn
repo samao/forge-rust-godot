@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://b4jo04reo38bw"]
+
+[ext_resource type="Texture2D" uid="uid://dmfp1cdk18sdr" path="res://levels/tilesets/sprites/forgotten_forest_example_tileset.png" id="1_jkg2n"]
+[ext_resource type="HitParticleSetting" uid="uid://h5dcq6toorv4" path="res://general/visual_effect/particle_settings/hit_particle_setting_big.tres" id="2_vvaoi"]
+[ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="3_xmf1d"]
+[ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="4_0nppj"]
+[ext_resource type="AudioStream" uid="uid://llqeny2gc0k8" path="res://general/audio/break_wood.wav" id="5_qvad6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2o4a8"]
+atlas = ExtResource("1_jkg2n")
+region = Rect2(537, 352, 80, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifow5"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
+size = Vector2(80, 14)
+
+[node name="WoodBreak" type="Sprite2D" unique_id=1461004733]
+texture = SubResource("AtlasTexture_2o4a8")
+
+[node name="Breakable" type="Breakable" parent="." unique_id=2036369991]
+hp = 1.0
+fix_count = true
+particles = Array[HitParticleSetting]([ExtResource("2_vvaoi"), ExtResource("3_xmf1d"), ExtResource("4_0nppj")])
+audio = ExtResource("5_qvad6")
+
+[node name="DamageArea" type="DamageArea" parent="Breakable" unique_id=907182368]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Breakable/DamageArea" unique_id=615864463]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_ifow5")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1950845763]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=174673922]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_wvhbo")
+debug_color = Color(0.4555662, 0.70196074, 0.13579877, 0.41960785)

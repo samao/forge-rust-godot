@@ -188,6 +188,36 @@ tracks/3/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_jej6c"]
+resource_name = "ball"
+length = 0.15
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [44, 45, 46]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/weapon_smears:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_g2els"]
 resource_name = "crouch"
 length = 0.2
@@ -422,11 +452,40 @@ tracks/1/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_3v2ag"]
+resource_name = "slam"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [43]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/weapon_smears:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
 _data = {
 &"RESET": SubResource("Animation_3vyb7"),
 &"attack_0": SubResource("Animation_tuyoq"),
 &"attack_1": SubResource("Animation_fjrip"),
+&"ball": SubResource("Animation_jej6c"),
 &"crouch": SubResource("Animation_g2els"),
 &"dash": SubResource("Animation_d2wvv"),
 &"die": SubResource("Animation_y4r1p"),
@@ -434,11 +493,17 @@ _data = {
 &"hurt": SubResource("Animation_ur7pv"),
 &"idle": SubResource("Animation_qhqgy"),
 &"jump": SubResource("Animation_dqkch"),
-&"run": SubResource("Animation_qlg0r")
+&"run": SubResource("Animation_qlg0r"),
+&"slam": SubResource("Animation_3v2ag")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibjym"]
 size = Vector2(18, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abi3o"]
+size = Vector2(20, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvhbo"]
 
 [node name="Player" type="Player" unique_id=392892552 groups=["Player"]]
 sounds = ExtResource("1_qlg0r")
@@ -447,7 +512,8 @@ collision_layer = 4
 collision_mask = 3
 floor_snap_length = 16.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1301589506]
+[node name="Stand_Collision" type="CollisionShape2D" parent="." unique_id=1301589506]
+unique_name_in_owner = true
 position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_hddm4")
 debug_color = Color(0.98688835, 0, 0.32376727, 0.41960785)
@@ -519,3 +585,23 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=1820069920]
 position = Vector2(-1, -25.5)
 shape = SubResource("RectangleShape2D_ibjym")
+
+[node name="SlamAttackArea" type="AttackArea" parent="." unique_id=1294160876]
+damage = 4.0
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlamAttackArea" unique_id=855588950]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_abi3o")
+debug_color = Color(0.3226231, 0.21973678, 0.70196074, 0.41960785)
+
+[node name="Morph_Roll_Collision" type="CollisionShape2D" parent="." unique_id=1213571518]
+unique_name_in_owner = true
+position = Vector2(0, -11)
+shape = SubResource("CircleShape2D_wvhbo")
+disabled = true
+debug_color = Color(0.5816496, 0.70196074, 0.5033193, 0.41960785)
