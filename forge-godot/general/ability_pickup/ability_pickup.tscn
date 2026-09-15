@@ -1,0 +1,254 @@
+[gd_scene format=3 uid="uid://cm7ywhal1otp8"]
+
+[ext_resource type="Texture2D" uid="uid://cgyl47bkopweu" path="res://general/sprites/abilities.png" id="1_ewwoj"]
+[ext_resource type="AudioStream" uid="uid://yyd71q82oxfv" path="res://general/audio/ability_acquire.wav" id="1_m1w6j"]
+[ext_resource type="AudioStream" uid="uid://0yfgdg173gle" path="res://general/audio/ability_crack.wav" id="2_yyg7i"]
+
+[sub_resource type="HitParticleSetting" id="HitParticleSetting_ewwoj"]
+
+[sub_resource type="HitParticleSetting" id="HitParticleSetting_m1w6j"]
+count = 16
+color = Color(1, 0.7633791, 0.13793033, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvhbo"]
+
+[sub_resource type="Animation" id="Animation_ewwoj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_m1w6j"]
+resource_name = "dash"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_yyg7i"]
+resource_name = "double_jump"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_jibx1"]
+resource_name = "morph_roll"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_wjh47"]
+resource_name = "slam"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ggl3"]
+_data = {
+&"RESET": SubResource("Animation_ewwoj"),
+&"dash": SubResource("Animation_m1w6j"),
+&"double_jump": SubResource("Animation_yyg7i"),
+&"morph_roll": SubResource("Animation_jibx1"),
+&"slam": SubResource("Animation_wjh47")
+}
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m1w6j"]
+load_path = "res://.godot/imported/abilities.png-dca4868ac0e63a4754c66f331ee2b3a9.ctex"
+
+[sub_resource type="Animation" id="Animation_1ggl3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AbilitySprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xxigd"]
+resource_name = "default"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_q7t65"]
+resource_name = "destroy"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [23, 24]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AbilitySprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dxffq"]
+_data = {
+&"RESET": SubResource("Animation_1ggl3"),
+&"default": SubResource("Animation_xxigd"),
+&"destroy": SubResource("Animation_q7t65")
+}
+
+[node name="AbilityPickup" type="AbilityPickup" unique_id=703555304]
+
+[node name="Breakable" type="Breakable" parent="." unique_id=1945231353]
+hp = 3.0
+fix_count = true
+particles = Array[HitParticleSetting]([SubResource("HitParticleSetting_ewwoj"), SubResource("HitParticleSetting_m1w6j")])
+break_audio = ExtResource("1_m1w6j")
+auto_remove = false
+hit_audio = ExtResource("2_yyg7i")
+unique_name_in_owner = true
+
+[node name="DamageArea" type="DamageArea" parent="Breakable" unique_id=793817979]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Breakable/DamageArea" unique_id=678410254]
+shape = SubResource("CircleShape2D_wvhbo")
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="AbilitySprite" type="Sprite2D" parent="." unique_id=1057116977]
+texture = ExtResource("1_ewwoj")
+hframes = 5
+vframes = 5
+
+[node name="AbilityAnim" type="AnimationPlayer" parent="AbilitySprite" unique_id=1232833350]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_1ggl3")
+
+[node name="OrbSprite" type="Sprite2D" parent="." unique_id=917777027]
+unique_name_in_owner = true
+texture = SubResource("CompressedTexture2D_m1w6j")
+hframes = 5
+vframes = 5
+frame = 20
+
+[node name="OrbAnim" type="AnimationPlayer" parent="OrbSprite" unique_id=1595271889]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_dxffq")

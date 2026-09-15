@@ -1,3 +1,4 @@
+pub mod ability_pickup;
 pub mod attack;
 pub mod audio_tirgger;
 pub mod breakable;
