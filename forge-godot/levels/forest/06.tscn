@@ -30,7 +30,6 @@ z_index = 256
 target_level = "uid://cwjhs426yd7cn"
 target_area_name = "6-7"
 position = Vector2(467, 195)
-scale = Vector2(-1, -2)
 
 [node name="LevelTransition2" parent="Transitions" unique_id=1087936530 instance=ExtResource("4_h6pe6")]
 location = "Left"

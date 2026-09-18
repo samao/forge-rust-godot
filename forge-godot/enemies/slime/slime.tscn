@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://dfinajco8a70"]
+
+[ext_resource type="AudioStream" uid="uid://djpeklduyjt6w" path="res://enemies/slime/slime_hit.wav" id="1_6326o"]
+[ext_resource type="Texture2D" uid="uid://jtv35tgbpj7w" path="res://enemies/slime/slime.png" id="1_sv735"]
+[ext_resource type="AudioStream" uid="uid://danw3mjxeui24" path="res://enemies/slime/slime_death.wav" id="2_57eei"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wvhbo"]
+size = Vector2(28, 30)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvhbo"]
+radius = 9.0
+
+[sub_resource type="Animation" id="Animation_sv735"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_j284o"]
+resource_name = "death"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_57eei"]
+resource_name = "stun"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16]
+}
+
+[sub_resource type="Animation" id="Animation_6326o"]
+resource_name = "walk"
+length = 0.7
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_57eei"]
+_data = {
+&"RESET": SubResource("Animation_sv735"),
+&"death": SubResource("Animation_j284o"),
+&"stun": SubResource("Animation_57eei"),
+&"walk": SubResource("Animation_6326o")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wvhbo"]
+radius = 6.0
+height = 26.0
+
+[node name="Slime" type="Slime" unique_id=472927068]
+hit = ExtResource("1_6326o")
+death = ExtResource("2_57eei")
+collision_layer = 0
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1846964103]
+unique_name_in_owner = true
+position = Vector2(0, -15)
+texture = ExtResource("1_sv735")
+hframes = 6
+vframes = 3
+
+[node name="EdgeDetector" type="EdgeDetector" parent="Sprite2D" unique_id=209324946]
+unique_name_in_owner = true
+position = Vector2(6, 15)
+target_position = Vector2(0, 12)
+collision_mask = 3
+
+[node name="DamageArea" type="DamageArea" parent="." unique_id=1167615045]
+unique_name_in_owner = true
+visible = false
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=1568791760]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_wvhbo")
+debug_color = Color(0.70196074, 0.13840176, 0.05435287, 0.41960785)
+
+[node name="AttackArea" type="AttackArea" parent="." unique_id=651578112]
+unique_name_in_owner = true
+visible = false
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=22971274]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_wvhbo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1257240516]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_57eei")
+autoplay = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1452210545]
+position = Vector2(0, -6)
+rotation = -1.5707964
+shape = SubResource("CapsuleShape2D_wvhbo")
+debug_color = Color(0.32292473, 0.70196074, 0.5036599, 0.41960785)

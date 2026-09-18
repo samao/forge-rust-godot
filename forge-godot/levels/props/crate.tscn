@@ -3,7 +3,6 @@
 [ext_resource type="HitParticleSetting" uid="uid://h5dcq6toorv4" path="res://general/visual_effect/particle_settings/hit_particle_setting_big.tres" id="2_dvm4l"]
 [ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="3_hdvq3"]
 [ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="4_rvin7"]
-[ext_resource type="AudioStream" uid="uid://llqeny2gc0k8" path="res://general/audio/break_wood.wav" id="5_qii2l"]
 [ext_resource type="AudioStream" uid="uid://ydi1djnh6xjj" path="res://general/audio/hit.wav" id="6_kmawh"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ujanv"]
@@ -31,7 +30,6 @@ debug_color = Color(0.70196074, 0.22230455, 0.0526137, 0.41960785)
 
 [node name="Breakable" type="Breakable" parent="." unique_id=2143819431]
 particles = Array[HitParticleSetting]([ExtResource("2_dvm4l"), ExtResource("3_hdvq3"), ExtResource("4_rvin7")])
-audio = ExtResource("5_qii2l")
 unique_name_in_owner = true
 
 [node name="DamageArea" type="DamageArea" parent="Breakable" unique_id=495741422]

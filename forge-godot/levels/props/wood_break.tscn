@@ -4,7 +4,6 @@
 [ext_resource type="HitParticleSetting" uid="uid://h5dcq6toorv4" path="res://general/visual_effect/particle_settings/hit_particle_setting_big.tres" id="2_vvaoi"]
 [ext_resource type="HitParticleSetting" uid="uid://cpi7sdopbcndq" path="res://general/visual_effect/particle_settings/hit_particle_setting_mid.tres" id="3_xmf1d"]
 [ext_resource type="HitParticleSetting" uid="uid://k26ecg1rtb4" path="res://general/visual_effect/particle_settings/hit_particle_setting_small.tres" id="4_0nppj"]
-[ext_resource type="AudioStream" uid="uid://llqeny2gc0k8" path="res://general/audio/break_wood.wav" id="5_qvad6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2o4a8"]
 atlas = ExtResource("1_jkg2n")
@@ -23,7 +22,6 @@ texture = SubResource("AtlasTexture_2o4a8")
 hp = 1.0
 fix_count = true
 particles = Array[HitParticleSetting]([ExtResource("2_vvaoi"), ExtResource("3_xmf1d"), ExtResource("4_0nppj")])
-audio = ExtResource("5_qvad6")
 
 [node name="DamageArea" type="DamageArea" parent="Breakable" unique_id=907182368]
 collision_layer = 0

@@ -18,6 +18,7 @@ impl IdelState {
 impl PlayerState for IdelState {
     fn enter(&mut self, _player: &mut crate::player::Player) {
         godot_print!("[状态] 进入空闲");
+        _player.set_attack_enabled(false);
         _player.set_horizontal_speed(0.0);
         _player.play_anim("idle");
     }
@@ -39,7 +40,7 @@ impl PlayerState for IdelState {
                 return Some(Box::new(AttackState::new(0)));
             }
             StateEvent::InputPressed { action } if action == "down" => {
-                return Some(Box::new(CrouchState::new()));
+                return Some(Box::new(CrouchState::new(false)));
             }
             StateEvent::InputJustPressed { action } if action == "dash" => {
                 return Some(Box::new(DashState::new()));

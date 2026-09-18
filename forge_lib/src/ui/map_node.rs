@@ -60,6 +60,9 @@ impl IControl for MapNode {
                 self.inditor = self.base().try_get_node_as::<Sprite2D>("%Inditor");
             }
             ControlNotification::ENTER_TREE => {
+                if Engine::singleton().is_editor_hint() {
+                    return;
+                }
                 let scene_path = self
                     .base()
                     .get_tree()

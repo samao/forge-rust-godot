@@ -1,21 +1,28 @@
 use godot::prelude::*;
 
 use crate::states::{
-    PlayerState, dash::DashState, event::StateEvent, fall::FallState, idle::IdelState, jump::JumpState
+    PlayerState, crouch_attack::CrouchAttack, dash::DashState, event::StateEvent, fall::FallState,
+    idle::IdelState, jump::JumpState,
 };
 
-pub struct CrouchState;
+pub struct CrouchState {
+    fix_to_end: bool,
+}
 
 impl CrouchState {
-    pub fn new() -> Self {
-        Self
+    pub fn new(fix: bool) -> Self {
+        Self { fix_to_end: fix }
     }
 }
 
 impl PlayerState for CrouchState {
     fn enter(&mut self, player: &mut crate::player::Player) {
         godot_print!("[进入] 状态 蹲伏");
-        player.play_anim("crouch");
+        if self.fix_to_end {
+            player.anim_seek_to_end("crouch");
+        } else {
+            player.play_anim("crouch");
+        }
     }
 
     fn exit(&mut self, _player: &mut crate::player::Player) {
@@ -40,6 +47,9 @@ impl PlayerState for CrouchState {
             }
             StateEvent::InputJustRelease { action } if action == "down" => {
                 return Some(Box::new(IdelState::new()));
+            }
+            StateEvent::InputJustPressed { action } if action == "attack" => {
+                return Some(Box::new(CrouchAttack::new(0)));
             }
             _ => {}
         }

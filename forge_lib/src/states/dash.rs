@@ -72,7 +72,7 @@ impl PlayerState for DashState {
                     }
                 }
             }
-            StateEvent::InputPressed { action } if action == "down" => {
+            StateEvent::InputJustRelease { action } if action == "down" => {
                 return Some(Box::new(SlamState::new()));
             }
             _ => {}

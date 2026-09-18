@@ -1,6 +1,7 @@
 use std::collections::VecDeque;
 
 use godot::classes::node::ProcessMode;
+use godot::classes::object::ConnectFlags;
 use godot::classes::{
     AnimationPlayer, CharacterBody2D, CollisionShape2D, Engine, ICharacterBody2D, Input,
     InputEvent, InputEventKey, Light2D, Os, ShapeCast2D, Sprite2D,
@@ -295,16 +296,36 @@ impl Player {
             .emit(self.hp, self.max_hp);
         if self.hp <= 0.0 {
             self.signals().die().emit();
-            self.switch_state(DieState::new());
             self.set_player_disable(true);
+            self.switch_state(DieState::new());
 
-            Message::singleton().signals().game_over().emit();
-            self.release_player();
+            if let Some(mut anim) = self.animation_player.clone() {
+                godot_print!("观察动画");
+                anim.connect_flags(
+                    "animation_finished",
+                    &Callable::from_object_method(&self.to_gd(), "game_over"),
+                    ConnectFlags::ONE_SHOT,
+                );
+            }
         }
     }
 
+    #[func]
+    pub fn game_over(&mut self, anim_name: StringName) {
+        if anim_name.to_string().as_str() == "die" {
+            godot_print!("游戏结束了");
+            Message::singleton().signals().game_over().emit();
+            // self.release_player();
+            self.base_mut().set_process_mode(ProcessMode::DISABLED);
+        }
+    }
+
+    pub fn set_to_default(&mut self) {
+        self.switch_state(IdelState::new());
+    }
+
     pub fn set_player_disable(&mut self, v: bool) {
-        godot_print!("关闭受伤检测");
+        // godot_print!("关闭受伤检测");
         if let Some(ref mut node) = self.base().try_get_node_as::<DamageArea>("%DamageArea") {
             node.set_process_mode(if v {
                 ProcessMode::DISABLED
@@ -465,8 +486,20 @@ impl Player {
         }
     }
 
+    pub fn anim_seek_to_end(&mut self, name: &str) {
+        match self.animation_player.clone() {
+            Some(mut anim) if anim.has_animation(name) => {
+                // let frames = anim
+                anim.play_ex().name(name).done();
+                let time = anim.get_current_animation_length();
+                anim.advance(time);
+            }
+            _ => {}
+        }
+    }
+
     pub fn play_anim(&self, name: &str) {
-        // godot_print!("播放动画: {}", name);
+        godot_print!("播放动画: {}", name);
         match self.animation_player.clone() {
             Some(mut anim) if anim.has_animation(name) => {
                 anim.play_ex().name(name).done();
@@ -507,8 +540,9 @@ impl Player {
     }
 
     #[func]
-    pub fn take_damage(&mut self, _pos: Vector2, dir: Vector2, damage: f32) {
+    pub fn take_damage(&mut self, _pos: Vector2, dir: Vector2, damage: Gd<AttackArea>) {
         // godot_print!("你敢扎我: {damage}");
+        let damage = damage.bind().get_damage();
         let next_velocity = Vector2::splat(self.speed * 0.8) * dir.normalized();
         self.base_mut().set_velocity(next_velocity);
         self.event_queue.push_back(StateEvent::TakeDamage {

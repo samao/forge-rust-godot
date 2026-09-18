@@ -32,7 +32,9 @@ impl AttackArea {
         self.base_mut().set_monitorable(v);
         self.base_mut().set_visible(v);
 
-        if let Some(audio) = self.audio.clone() {
+        if let Some(audio) = self.audio.clone()
+            && v
+        {
             if let Ok(mut audio_helper) = try_get_autoload_by_name::<AudioManager>("AudioHelper") {
                 let pos = self.base().get_global_position();
                 audio_helper.bind_mut().play_spatial_sound(audio, pos);

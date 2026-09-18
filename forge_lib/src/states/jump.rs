@@ -65,7 +65,8 @@ impl PlayerState for JumpState {
                 return Some(Box::new(AttackState::new(0)));
             }
             StateEvent::InputPressed { action } if action == "down" => {
-                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
+                if self.jump_count > 1 || player.base().get_velocity().y.abs() < player.speed * 0.6
+                {
                     return Some(Box::new(SlamState::new()));
                 }
             }

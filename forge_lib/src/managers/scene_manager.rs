@@ -6,7 +6,7 @@ use godot::{
 };
 
 use crate::{
-    AsyncHandle, level_transition::Side, managers::save::SaveManager, message::Message,
+    level_transition::Side, managers::save::SaveManager, message::Message,
     ui::pause_menu::PauseMenu,
 };
 
@@ -69,7 +69,7 @@ impl SceneManager {
 
     #[func]
     fn exit_request(&mut self) {
-        AsyncHandle::singleton().bind_mut().terminate();
+        // AsyncHandle::singleton().bind_mut().terminate();
         if self
             .base()
             .get_tree()

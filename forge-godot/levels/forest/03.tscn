@@ -69,7 +69,6 @@ tile_set = ExtResource("1_j1sxu")
 target_level = "uid://wqwk2yx7bdun"
 target_area_name = "3-4"
 position = Vector2(1395, 163)
-scale = Vector2(-1, -2)
 
 [node name="LevelTransition5" parent="Transitions" unique_id=1928312129 instance=ExtResource("2_wcqut")]
 location = "Bottom"

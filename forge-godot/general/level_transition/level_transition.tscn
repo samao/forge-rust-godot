@@ -9,7 +9,7 @@ size = Vector2(32, 32)
 [node name="LevelTransition" type="LevelTransition" unique_id=1057912439]
 location = "Right"
 position = Vector2(0, -2)
-scale = Vector2(1, 2)
+scale = Vector2(-1, -2)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1853097857]
 unique_name_in_owner = true

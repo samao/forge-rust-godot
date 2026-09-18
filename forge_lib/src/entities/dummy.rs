@@ -62,7 +62,7 @@ impl INode2D for Dummy {
 #[godot_api]
 impl Dummy {
     #[func]
-    pub fn take_damage(&mut self, pos: Vector2, dir: Vector2, _damage: f32) {
+    pub fn take_damage(&mut self, pos: Vector2, dir: Vector2, _damage: Gd<AttackArea>) {
         if let Some(mut tween) = self.current_tween.take() {
             tween.kill();
         }

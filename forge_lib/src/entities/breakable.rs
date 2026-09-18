@@ -1,7 +1,7 @@
 use godot::{classes::AudioStream, prelude::*, tools::try_get_autoload_by_name};
 
 use crate::{
-    managers::audio_manager::AudioManager, message::Message,
+    entities::attack::AttackArea, managers::audio_manager::AudioManager, message::Message,
     resource::particles::HitParticleSetting,
 };
 
@@ -42,7 +42,8 @@ impl Breakable {
     pub fn take_damage(damage: f32);
 
     #[func]
-    fn take_damage(&mut self, pos: Vector2, dir: Vector2, damage: f32) {
+    fn take_damage(&mut self, pos: Vector2, dir: Vector2, damage: Gd<AttackArea>) {
+        let damage = damage.bind().get_damage();
         self.hp -= damage;
         self.signals().take_damage().emit(damage);
         if self.hp <= 0.0 {

@@ -4,6 +4,7 @@ use crate::player::Player;
 
 pub mod attack;
 pub mod crouch;
+pub mod crouch_attack;
 pub mod dash;
 pub mod die;
 pub mod event;

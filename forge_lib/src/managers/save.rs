@@ -25,6 +25,9 @@ pub struct SaveManager {
 #[godot_api]
 impl INode2D for SaveManager {
     fn ready(&mut self) {
+        if Engine::singleton().is_editor_hint() {
+            return;
+        }
         self.load_save_file();
     }
     fn unhandled_key_input(&mut self, event: Gd<InputEvent>) {
@@ -78,7 +81,7 @@ impl SaveManager {
         if err == godot::global::Error::OK {
             return;
         }
-        godot_print!("{:?}", err.into_result());
+        godot_print!("CFG fault = {:?}", err.into_result());
     }
 
     pub fn get_volume(&self) -> (f64, f64, f64) {
@@ -315,7 +318,9 @@ impl SaveManager {
                 player.bind_mut().ground_slam = ground_slam;
                 player.bind_mut().morph_roll = morph_roll;
                 player.set_global_position(Vector2 { x, y });
+                player.bind_mut().set_player_disable(false);
                 player.set_process_mode(ProcessMode::INHERIT);
+                player.bind_mut().set_to_default();
             } else {
                 godot_print!("没有玩家呢");
             }

@@ -49,7 +49,7 @@ impl DamageArea {
                         &[
                             attack_pos.to_variant(),
                             pos.to_variant(),
-                            attack_area.bind().get_damage().to_variant(),
+                            attack_area.to_variant(),
                         ],
                     ) {
                         godot_print!("{:?}", msg);

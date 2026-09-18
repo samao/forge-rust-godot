@@ -45,7 +45,7 @@ impl PlayerState for FallState {
                 if h != 0.0 {
                     player.set_horizontal_speed(h * player.speed * 0.8);
                 }
-
+                // godot_print!("下落速度: {}", player.base().get_velocity());
                 self.time -= delta;
                 if self.time <= 0.0 {
                     if player.base().is_on_floor() {
@@ -60,12 +60,12 @@ impl PlayerState for FallState {
                 }
             }
             StateEvent::InputJustPressed { action } if action == "down" => {
-                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
+                if player.base().get_velocity().y < 200.0 {
                     return Some(Box::new(SlamState::new()));
                 }
             }
             StateEvent::InputJustPressed { action } if action == "dash" => {
-                if player.base().get_velocity().y.abs() < player.speed * 0.8 {
+                if player.base().get_velocity().y < 200.0 {
                     return Some(Box::new(DashState::new()));
                 }
             }

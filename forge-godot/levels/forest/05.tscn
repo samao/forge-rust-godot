@@ -30,7 +30,6 @@ tile_set = ExtResource("1_lhpap")
 target_level = "uid://co0hdw8llcoq0"
 target_area_name = "5-6"
 position = Vector2(592, 33)
-scale = Vector2(-1, -2)
 
 [node name="LevelTransition4" parent="." unique_id=338396303 instance=ExtResource("2_7q72b")]
 size = 4
